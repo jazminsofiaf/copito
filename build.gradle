@@ -1,0 +1,30 @@
+//Gradle plugin for executing node scripts
+plugins {
+    id "com.moowork.node" version "1.2.0"
+}
+ 
+//apply plugins
+apply plugin: 'base'
+apply plugin: "com.moowork.node"
+ 
+node {
+    version = "10.15.0"
+    download = true
+}
+ 
+//to build and run project with npm
+task bundle(type: NpmTask, dependsOn: npmInstall) {
+    args = ['run', 'build']
+}
+
+//when Gradle tries to run assemble task it will first run the custom task bundle 
+assemble.dependsOn(bundle)
+
+//task to run react test in comand line 
+task test(type: NpmTask) {
+    environment = ['CI': 'true']
+    args = ['run', 'test']
+}
+ 
+check.dependsOn(test)
+
