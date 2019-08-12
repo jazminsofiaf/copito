@@ -1,7 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { shallow } from 'enzyme';
+import {mount, shallow} from 'enzyme';
+import { MemoryRouter } from 'react-router';
 import App from './App';
+import Home from './components/pages/Home';
+
+
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
@@ -9,8 +13,12 @@ it('renders without crashing', () => {
   ReactDOM.unmountComponentAtNode(div);
 });
 
-it('renders welcome message', () => {
-  const wrapper = shallow(<App />);
-  const welcome = <h1>Welcome to Florida App</h1>;
- expect(wrapper.contains(welcome)).toEqual(true);
+
+it('invalid path should redirect to Home page', () => {
+  const wrapper = mount(
+      <MemoryRouter initialEntries={[ '/random' ]}>
+        <App/>
+      </MemoryRouter>
+  );
+  expect(wrapper.find(Home)).toHaveLength(1);
 });
