@@ -1,14 +1,14 @@
 //Gradle plugin for executing node scripts
 plugins {
-    id "com.moowork.node" version "1.2.0"
+    id("com.github.node-gradle.node") version "2.2.0"
 }
  
 //apply plugins
 apply plugin: 'base'
-apply plugin: "com.moowork.node"
+apply plugin: "com.github.node-gradle.node"
  
 node {
-    version = "10.15.0"
+    version = "12.16.2"
     download = true
 }
  
