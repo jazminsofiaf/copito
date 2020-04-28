@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {mount, shallow} from 'enzyme';
 import { MemoryRouter } from 'react-router';
 import App from './App';
-import Home from './components/pages/Home';
+import Home from './pages/Home';
 
 
 
