@@ -86,6 +86,7 @@ class ProductList extends React.Component{
     }
 }
 
+const minWidth = '150px'
 const drawerWidth = "20%";
 const styles = theme => ({
     products: {
@@ -97,10 +98,12 @@ const styles = theme => ({
         display: 'flex',
     },
     drawer: {
+        minWidth: minWidth,
         width: drawerWidth,
         flexShrink: 0,
     },
     drawerPaper: {
+        minWidth: minWidth,
         width: drawerWidth,
     },
     drawerContainer: {

@@ -12,18 +12,9 @@ import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import Hidden from "@material-ui/core/Hidden";
 
 
-function HideOnScroll(props) {
-    const { children, window } = props;
-    const trigger = useScrollTrigger({ target: window ? window() : undefined });
-
-    return (
-        <Slide appear={false} direction="down" in={!trigger}>
-            {children}
-        </Slide>
-    );
-}
 
 
 const useStyles = makeStyles((theme) => ({
@@ -46,11 +37,29 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
     },
     menuBarItem: {
+        textTransform: 'none',
         alignItems: 'center',
-        width:'15%'
+        width:'15%',
+
+        [theme.breakpoints.down("sm")]: {
+            flexGrow: 1,
+            alignItems: 'stretch',
+        },
     },
 
 }));
+
+function HideOnScroll(props) {
+    const { children, window } = props;
+    const trigger = useScrollTrigger({ target: window ? window() : undefined });
+
+    return (
+        <Slide appear={false} direction="down" in={!trigger}>
+            {children}
+        </Slide>
+    );
+}
+
 
 export default function UpperBar(props) {
     const classes = useStyles();
@@ -77,13 +86,14 @@ export default function UpperBar(props) {
             <HideOnScroll {...props}>
                 <AppBar position="fixed" className={classes.appBar}>
                     <Toolbar>
-                        <Typography variant="h6" className={classes.mainTitle}>
-                            Florida Productos veterinarios
-                        </Typography>
+                        <Hidden only={['sm', 'xs']}>
+                            <Typography variant="h7" className={classes.mainTitle}>
+                                Florida Productos veterinarios
+                            </Typography>
+                        </Hidden>
                         <ButtonGroup className={classes.menuBar}>
-                            <Button variant="text" className={classes.menuBarItem}>Home</Button>
-                            <Button variant="text" className={classes.menuBarItem}>Shop</Button>
-                            <Button variant="text" className={classes.menuBarItem}>Contact us</Button>
+                            <Button variant="text" className={classes.menuBarItem}>Productos</Button>
+                            <Button variant="text" className={classes.menuBarItem}>Contactanos</Button>
                         </ButtonGroup>
                         <div>
                             <IconButton
@@ -108,8 +118,8 @@ export default function UpperBar(props) {
                                 }}
                                 open={open}
                                 onClose={handleClose}>
-                                <MenuItem onClick={handleClose}>My account</MenuItem>
-                                <MenuItem onClick={handleClose}>Log out</MenuItem>
+                                <MenuItem onClick={handleClose}>Mi cuenta</MenuItem>
+                                <MenuItem onClick={handleClose}>Salir</MenuItem>
                             </Menu>
                         </div>
                     </Toolbar>
