@@ -77,8 +77,27 @@ export default function UpperBar(props) {
     };
 
     const handleClose = () => {
+        //deja de mostrar el menu
         setAnchorEl(null);
     };
+
+    const handleMyAccount = () => {
+        console.log("mi cuenta");
+        handleClose();
+    }
+
+    const handleLogOut = () => {
+        console.log("salir");
+        handleClose();
+    }
+
+    const goProductsPage = () => {
+        console.log("go products Page");
+    }
+
+    const goContactUsPage = () => {
+        console.log("go contact Page");
+    }
 
     return (
         <div>
@@ -87,13 +106,13 @@ export default function UpperBar(props) {
                 <AppBar position="fixed" className={classes.appBar}>
                     <Toolbar>
                         <Hidden only={['sm', 'xs']}>
-                            <Typography variant="h7" className={classes.mainTitle}>
+                            <Typography variant="h6" className={classes.mainTitle}>
                                 Florida Productos veterinarios
                             </Typography>
                         </Hidden>
                         <ButtonGroup className={classes.menuBar}>
-                            <Button variant="text" className={classes.menuBarItem}>Productos</Button>
-                            <Button variant="text" className={classes.menuBarItem}>Contactanos</Button>
+                            <Button variant="text" className={classes.menuBarItem} onClick={goProductsPage}>Productos</Button>
+                            <Button variant="text" className={classes.menuBarItem}  onClick={goContactUsPage}>Contactenos</Button>
                         </ButtonGroup>
                         <div>
                             <IconButton
@@ -118,8 +137,8 @@ export default function UpperBar(props) {
                                 }}
                                 open={open}
                                 onClose={handleClose}>
-                                <MenuItem onClick={handleClose}>Mi cuenta</MenuItem>
-                                <MenuItem onClick={handleClose}>Salir</MenuItem>
+                                <MenuItem onClick={handleMyAccount}>Mi cuenta</MenuItem>
+                                <MenuItem onClick={handleLogOut}>Salir</MenuItem>
                             </Menu>
                         </div>
                     </Toolbar>

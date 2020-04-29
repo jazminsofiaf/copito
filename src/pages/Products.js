@@ -11,11 +11,13 @@ import Drawer from "@material-ui/core/Drawer";
 import UpperBar from "../components/UpperBar";
 
 
+
 class ProductList extends React.Component{
     constructor(props){
         super(props);
         this.state = {
             products: [],
+            category: 'Todos',
         }
     }
 
@@ -41,8 +43,17 @@ class ProductList extends React.Component{
         this.getProducts();
     }
 
+    filterCategory(category) {
+        console.log(category);
+        this.setState(
+            {category: category}
+        )
+    }
+
+
     render() {
         const { classes } = this.props;
+
         return(
             <div className={classes.root}>
                 <UpperBar />
@@ -57,8 +68,8 @@ class ProductList extends React.Component{
                     <div className={classes.drawerContainer}>
                         <Divider />
                         <List>
-                            {['Medicamentos', 'Jueguetes', 'Comida'].map(category => (
-                                <ListItem button key={category}>
+                            {['Todos','Medicamentos', 'Jueguetes', 'Comida'].map(category => (
+                                <ListItem button key={category} onClick={() => this.filterCategory(category)}>
                                     <ListItemText primary={category} />
                                 </ListItem>
                             ))}
@@ -71,11 +82,12 @@ class ProductList extends React.Component{
                         <div className={classes.products}>
                             <Grid container spacing={3}>
                                 {this.state.products.map((product, i) =>{
-                                    return(
-                                        <div key={i}>
-                                            <ProductCard product={product}/>
-                                        </div>
-                                    )
+                                    if(this.state.category === 'Todos' || product.id %2 === 0)
+                                        return(
+                                            <div key={i}>
+                                                <ProductCard product={product}/>
+                                            </div>
+                                        )
                                 })}
                             </Grid>
                         </div>
