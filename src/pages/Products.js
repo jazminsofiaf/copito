@@ -7,8 +7,8 @@ import Divider from "@material-ui/core/Divider";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Drawer from "@material-ui/core/Drawer";
+import UpperBar from "../components/UpperBar";
 
 
 class ProductList extends React.Component{
@@ -45,7 +45,7 @@ class ProductList extends React.Component{
         const { classes } = this.props;
         return(
             <div className={classes.root}>
-                <CssBaseline />
+                <UpperBar />
                 <Drawer
                     className={classes.drawer}
                     variant="permanent"
@@ -68,7 +68,6 @@ class ProductList extends React.Component{
                 <main className={classes.content}>
                     <Toolbar />
                     <div>
-                        <h1>Shop</h1>
                         <div className={classes.products}>
                             <Grid container spacing={3}>
                                 {this.state.products.map((product, i) =>{
@@ -96,9 +95,6 @@ const styles = theme => ({
     },
     root: {
         display: 'flex',
-    },
-    appBar: {
-        zIndex: theme.zIndex.drawer + 1,
     },
     drawer: {
         width: drawerWidth,
