@@ -9,6 +9,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Drawer from "@material-ui/core/Drawer";
 import UpperBar from "../components/UpperBar";
+import Hidden from "@material-ui/core/Hidden";
 
 
 
@@ -56,6 +57,7 @@ class ProductList extends React.Component{
         return(
             <div className={classes.root}>
                 <UpperBar/>
+                <Hidden only={['sm', 'xs']}>
                 <Drawer
                     className={classes.drawer}
                     variant="permanent"
@@ -75,6 +77,7 @@ class ProductList extends React.Component{
                         </List>
                     </div>
                 </Drawer>
+                </Hidden>
                 <main className={classes.content}>
                     <Toolbar />
                     <div>

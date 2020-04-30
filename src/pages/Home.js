@@ -7,6 +7,9 @@ import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import PetsIcon from "@material-ui/icons/Pets";
+import GridList from "@material-ui/core/GridList";
+import GridListTile from "@material-ui/core/GridListTile";
+import Toolbar from "@material-ui/core/Toolbar";
 
 class Home extends React.Component{
     constructor(props){
@@ -17,32 +20,37 @@ class Home extends React.Component{
         return (
             <div className={classes.root}>
                 <UpperBar/>
-                <Grid container spacing={3}>
-                    <Grid item xs={12} className={classes.image} >
+                <Toolbar />
+                <div>
 
+                    <Grid container spacing={3} className={classes.image}>
+                        <Grid item xs={false} sm={4} md={7} ></Grid>
+                        <Grid item xs={12} sm={8} md={5} elevation={6} square className={classes.titleContainer}>
+                            <Box  p={3} >
+                                <Box display="flex" justifyContent="flex-start" >
+                                    <Typography variant="h3" noWrap className={classes.mainTitle}>
+                                        Florida
+                                    </Typography>
+                                    <PetsIcon/>
+                                </Box>
+                                <Typography variant="h4"  align="left"  className={classes.mainTitle}>
+                                    Productos Veterinarios
+                                </Typography>
+                                <Typography variant="h6"  align="left"  className={classes.mainTitle}>
+                                    Tu distribuidora de medicamentos preferida!
+                                </Typography>
+                            </Box>
+                        </Grid>
                     </Grid>
-                    <Grid item xs={6} sm={3} >
-                        <Paper className={classes.paper}>Envios</Paper>
-                    </Grid>
-                    <Grid item xs={6} sm={3}>
-                        <Paper className={classes.paper}>Como Comprar?</Paper>
-                    </Grid>
-                    <Grid item xs={6} sm={3}>
-                        <Paper className={classes.paper}>Perros</Paper>
-                    </Grid>
-                    <Grid item xs={6} sm={3}>
-                        <Paper className={classes.paper}>Gatos</Paper>
-                    </Grid>
-                </Grid>
+
+
+                </div>
             </div>
         );
     }
 }
 
 const styles = theme => ({
-    root: {
-        height: '100vh',
-    },
     image: {
         backgroundImage: 'url(https://images.unsplash.com/photo-1524511751214-b0a384dd9afe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1334&q=80)',
         backgroundRepeat: 'no-repeat',
@@ -50,18 +58,20 @@ const styles = theme => ({
             theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
         backgroundSize: 'cover',
 
-        height: '100vh',
+        height: '70vh',
         backgroundPosition: 'center',
+
+        //para el cuadrado contenido dentro
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
     },
-    icon: {
-        color: 'antiquewhite',
-    },
+
     titleContainer: {
-        backgroundSize: 'cover',
-        backgroundColor:  theme.palette.primary.main,
+        backgroundColor: 'rgba(250,235,215, 0.6)',
     },
     mainTitle: {
-        color: 'antiquewhite',
+        color: 'black',
         fontWeight: 900,
     },  
     paper: {

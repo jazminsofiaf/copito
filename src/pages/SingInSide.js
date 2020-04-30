@@ -96,7 +96,7 @@ class SignInSide extends React.Component{
                             </Typography>
                             <PetsIcon className={classes.icon}/>
                         </Box>
-                        <Typography variant="h4" noWrap className={classes.mainTitle}>
+                        <Typography variant="h4" className={classes.mainTitle}>
                             Productos Veterinarios
                         </Typography>
                     </div>

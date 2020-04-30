@@ -17,6 +17,9 @@ import withAdmin from "./providers/withAdmin";
 const theme = createMuiTheme({
     palette: {
         type: 'light',
+        background: {
+            default: 'antiquewhite',
+        },
         primary: {
             main: '#BC4639',
         },
