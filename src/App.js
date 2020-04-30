@@ -9,6 +9,7 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Home from "./pages/Home";
 import Products from "./pages/Products";
 import SingInSide from "./pages/SingInSide";
+import IconAnimation from "./components/IconAnimation"
 import CssBaseline from "@material-ui/core/CssBaseline";
 import withAdmin from "./providers/withAdmin";
 
@@ -41,7 +42,8 @@ export default class App extends Component {
                     <Router>
                         <div>
                             <Switch>
-                                <Route exact path="/" component={Home}/>
+                                <Route exact path="/" component={IconAnimation}/>
+                                <Route exact path="/home" component={Home}/>
                                 <Route exact path="/login" component={SingInSide}/>
                                 <Route path="/products" component={withAdmin(Products)}/>
                                 <Route component={Home}/>

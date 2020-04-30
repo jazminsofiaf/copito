@@ -7,7 +7,6 @@ import Slide from "@material-ui/core/Slide";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import IconButton from "@material-ui/core/IconButton";
 import {AccountCircle} from "@material-ui/icons";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -65,12 +64,24 @@ class UpperBar extends React.Component {
         this.props.history.push('/login');
     }
 
+    goHomePage = () => {
+        console.log("go products Page");
+        this.props.history.push('/home');
+    }
+
     goProductsPage = () => {
         console.log("go products Page");
+        this.props.history.push('/products');
     }
 
     goContactUsPage = () => {
         console.log("go contact Page");
+        this.props.history.push('/contact-us');
+    }
+
+    goFAQ = () => {
+        console.log("go contact Page");
+        this.props.history.push('/faq');
     }
 
 
@@ -83,18 +94,22 @@ class UpperBar extends React.Component {
                 <CssBaseline/>
                 <HideOnScroll {...this.props}>
                     <AppBar position="fixed" className={classes.appBar}>
-                        <Toolbar>
+                        <Toolbar className={classes.toolbar}>
                             <Hidden only={['sm', 'xs']}>
-                                <Typography variant="h6" className={classes.mainTitle}>
+                                <Typography variant="h6" noWrap className={classes.mainTitle}>
                                     Florida Productos veterinarios
                                 </Typography>
                             </Hidden>
-                            <ButtonGroup className={classes.menuBar}>
+                            <nav className={classes.menuBar}>
+                                <Button variant="text" className={classes.menuBarItem}
+                                        onClick={this.goHomePage}>Inicio</Button>
                                 <Button variant="text" className={classes.menuBarItem}
                                         onClick={this.goProductsPage}>Productos</Button>
                                 <Button variant="text" className={classes.menuBarItem}
+                                        onClick={this.goContactUsPage}>Preguntas frecuentes</Button>
+                                <Button variant="text" className={classes.menuBarItem}
                                         onClick={this.goContactUsPage}>Contactenos</Button>
-                            </ButtonGroup>
+                            </nav>
                             <div>
                                 <IconButton
                                     aria-label="account of current user"
@@ -141,18 +156,22 @@ const styles = theme => ({
     menuButton: {
         marginRight: theme.spacing(2),
     },
+    toolbar: {
+        flexWrap: 'wrap',
+    },
     mainTitle: {
-        float: 'left',
+        textAlign: 'left',
+        flexGrow: 1,
     },
     menuBar: {
-        flexGrow: 1,
         justifyContent: 'center',
         alignItems: 'center',
     },
     menuBarItem: {
+        margin: theme.spacing(1, 1.5),
         textTransform: 'none',
         alignItems: 'center',
-        width:'15%',
+        color: 'white',
 
         [theme.breakpoints.down("sm")]: {
             flexGrow: 1,

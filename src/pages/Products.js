@@ -53,10 +53,9 @@ class ProductList extends React.Component{
 
     render() {
         const { classes } = this.props;
-
         return(
             <div className={classes.root}>
-                <UpperBar history={this.props.history} />
+                <UpperBar/>
                 <Drawer
                     className={classes.drawer}
                     variant="permanent"

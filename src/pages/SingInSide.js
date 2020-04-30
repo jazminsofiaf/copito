@@ -14,6 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from "@material-ui/core/styles/withStyles";
 import config from '../config/config';
 import authToken from '../providers/authToken';
+import PetsIcon from '@material-ui/icons/Pets';
 
 const server_url = config.server_url;
 function Copyright() {
@@ -49,7 +50,7 @@ class SignInSide extends React.Component{
         if(this.state.email === 'jazminsofiaf@gmail.com' && this.state.password === 'admin') {
             alert('Atencion! Acceso de Admin sin autenticar!!!');
             authToken.setToken("admin");
-            this.props.history.push('/');
+            this.props.history.push('/home');
         }
         {/*
         let user = {
@@ -87,7 +88,19 @@ class SignInSide extends React.Component{
         return(
             <Grid container component="main" className={classes.root}>
                 <CssBaseline />
-                <Grid item xs={false} sm={4} md={7} className={classes.image} />
+                <Grid item xs={false} sm={4} md={7} className={classes.image} >
+                    <div  className={classes.titleContainer}>
+                        <Box display="flex" justifyContent="center" m={1} p={1} >
+                            <Typography variant="h4" noWrap className={classes.mainTitle}>
+                                FLORIDA
+                            </Typography>
+                            <PetsIcon className={classes.icon}/>
+                        </Box>
+                        <Typography variant="h4" noWrap className={classes.mainTitle}>
+                            Productos Veterinarios
+                        </Typography>
+                    </div>
+                </Grid>
                 <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                     <div className={classes.paper}>
                         <Avatar className={classes.avatar}>
@@ -168,6 +181,22 @@ const styles = theme => ({
             theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
         backgroundSize: 'cover',
         backgroundPosition: 'center',
+    },
+    titleContainer: {
+        marginTop: '15%',
+        marginLeft: '5%',
+        marginRight: '5%',
+        borderRadius: '10px',
+        padding: '20px',
+        backgroundColor:  theme.palette.primary.main,
+
+    },
+    icon: {
+        color: 'antiquewhite',
+    },
+    mainTitle: {
+        color: 'antiquewhite',
+        fontWeight: 900,
     },
     paper: {
         margin: theme.spacing(8, 4),
