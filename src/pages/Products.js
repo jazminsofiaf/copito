@@ -10,7 +10,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Drawer from "@material-ui/core/Drawer";
 import UpperBar from "../components/UpperBar";
 import Hidden from "@material-ui/core/Hidden";
-import ProductFilterDrower from "../components/ProductFilterDrawer";
+import FilterDrawer from "../components/FilterDrawer";
 
 
 
@@ -19,6 +19,7 @@ class ProductList extends React.Component{
         super(props);
         this.state = {
             products: [],
+            categories: ["Todos","Medicamentos", "Alimentos", "juguetes"],
             category: 'Todos',
         }
     }
@@ -59,7 +60,10 @@ class ProductList extends React.Component{
         return(
             <div className={classes.root}>
                 <UpperBar/>
-                <ProductFilterDrower  categoryName={this.state.category} onFilterClick={this.handleOnFilterClick.bind(this)}/>
+                <FilterDrawer
+                    categoryList={this.state.categories}
+                    categoryName={this.state.category}
+                    onFilterClick={this.handleOnFilterClick.bind(this)}/>
                 <main className={classes.content}>
                     <Toolbar />
                     <div>

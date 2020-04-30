@@ -9,14 +9,14 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Hidden from "@material-ui/core/Hidden";
 
 
-class ProductFilterDrawer extends React.Component {
+class FilterDrawer extends React.Component {
     constructor(props) {
         super(props);
     }
 
 
     render() {
-        const { classes,  categoryName, onFilterClick }  = this.props;
+        const { classes, categoryList,  categoryName, onFilterClick }  = this.props;
         return (
             <Hidden only={['sm', 'xs']}>
                 <Drawer
@@ -29,7 +29,7 @@ class ProductFilterDrawer extends React.Component {
                     <div className={classes.drawerContainer}>
                         <Divider />
                         <List>
-                            {['Todos','Medicamentos', 'Jueguetes', 'Comida'].map(category => (
+                            {categoryList.map(category => (
                                 <ListItem button
                                           key={category}
                                           name={categoryName}
@@ -63,4 +63,4 @@ const styles = theme => ({
 
 });
 
-export default withStyles(styles)(ProductFilterDrawer);
+export default withStyles(styles)(FilterDrawer);
