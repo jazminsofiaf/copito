@@ -10,6 +10,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Drawer from "@material-ui/core/Drawer";
 import UpperBar from "../components/UpperBar";
 import Hidden from "@material-ui/core/Hidden";
+import ProductFilterDrower from "../components/ProductFilterDrawer";
 
 
 
@@ -44,12 +45,13 @@ class ProductList extends React.Component{
         this.getProducts();
     }
 
-    filterCategory(category) {
-        console.log(category);
+    handleOnFilterClick = name => event => {
+        console.log(event.target);
         this.setState(
-            {category: category}
+            {category: name}
         )
-    }
+    };
+
 
 
     render() {
@@ -57,27 +59,7 @@ class ProductList extends React.Component{
         return(
             <div className={classes.root}>
                 <UpperBar/>
-                <Hidden only={['sm', 'xs']}>
-                <Drawer
-                    className={classes.drawer}
-                    variant="permanent"
-                    classes={{
-                        paper: classes.drawerPaper,
-                    }}
-                >
-                    <Toolbar />
-                    <div className={classes.drawerContainer}>
-                        <Divider />
-                        <List>
-                            {['Todos','Medicamentos', 'Jueguetes', 'Comida'].map(category => (
-                                <ListItem button key={category} onClick={() => this.filterCategory(category)}>
-                                    <ListItemText primary={category} />
-                                </ListItem>
-                            ))}
-                        </List>
-                    </div>
-                </Drawer>
-                </Hidden>
+                <ProductFilterDrower  categoryName={this.state.category} onFilterClick={this.handleOnFilterClick.bind(this)}/>
                 <main className={classes.content}>
                     <Toolbar />
                     <div>
@@ -100,8 +82,6 @@ class ProductList extends React.Component{
     }
 }
 
-const minWidth = '150px'
-const drawerWidth = "20%";
 const styles = theme => ({
     products: {
         display: 'flex',
@@ -110,18 +90,6 @@ const styles = theme => ({
     },
     root: {
         display: 'flex',
-    },
-    drawer: {
-        minWidth: minWidth,
-        width: drawerWidth,
-        flexShrink: 0,
-    },
-    drawerPaper: {
-        minWidth: minWidth,
-        width: drawerWidth,
-    },
-    drawerContainer: {
-        overflow: 'auto',
     },
     content: {
         flexGrow: 1,

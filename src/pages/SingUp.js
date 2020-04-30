@@ -70,6 +70,67 @@ class SingUp extends React.Component{
                                 autoComplete="lname"
                             />
                         </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                variant="outlined"
+                                fullWidth
+                                id="company"
+                                label="Vererinaria"
+                                name="company"
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id="cuil"
+                                label="Cuil"
+                                name="cuil"
+                            />
+                        </Grid>
+
+
+                        <Grid item xs={12}>
+                            <Typography variant="subtitle1"  align="left"  className={classes.mainTitle}>
+                                Direccion
+                            </Typography>
+                            <Grid container spacing={2}>
+                                <Grid item xs={6}>
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        id="street"
+                                        label="Calle"
+                                        name="street"
+                                    />
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        id="streetNumber"
+                                        label="Altura"
+                                        name="streetNumber"
+                                    />
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        id="floor"
+                                        label="Piso"
+                                        name="floor"
+                                    />
+                                </Grid>
+                            </Grid>
+                        </Grid>
+
+
+
                         <Grid item xs={12}>
                             <TextField
                                 variant="outlined"
