@@ -1,14 +1,10 @@
 import React from 'react';
-import logo from '../components/logo.svg';
 import UpperBar from "../components/UpperBar";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import PetsIcon from "@material-ui/icons/Pets";
-import GridList from "@material-ui/core/GridList";
-import GridListTile from "@material-ui/core/GridListTile";
 import Toolbar from "@material-ui/core/Toolbar";
 
 class Home extends React.Component{
