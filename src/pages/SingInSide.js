@@ -44,6 +44,15 @@ class SignInSide extends React.Component{
         });
     }
 
+    handleSingUp = (event) => {
+        this.props.history.push('/singup');
+    }
+
+    handleForgotPassword = (event) => {
+        console.log("forgot password")
+    }
+
+
 
     onSubmit = (event) => {
         event.preventDefault();//prevent a browser reload/refresh
@@ -149,12 +158,12 @@ class SignInSide extends React.Component{
                             </Button>
                             <Grid container>
                                 <Grid item xs>
-                                    <Link href="#" variant="body2">
+                                    <Link  variant="body2" onClick={this.handleForgotPassword}>
                                         Olvide mi contraseña
                                     </Link>
                                 </Grid>
                                 <Grid item>
-                                    <Link href="#" variant="body2">
+                                    <Link variant="body2" onClick={this.handleSingUp}>
                                         {"No tienenes una cuenta? Registrate"}
                                     </Link>
                                 </Grid>
