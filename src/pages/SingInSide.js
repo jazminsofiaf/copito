@@ -60,6 +60,10 @@ class SignInSide extends React.Component{
             alert('Atencion! Acceso de Admin sin autenticar!!!');
             authToken.setToken("admin");
             this.props.history.push('/home');
+        } else {
+            alert('Suponemos que hichimos un post y nos devolvio un jwt!!!');
+            authToken.setToken("otro");
+            this.props.history.push('/home');
         }
         {/*
         let user = {

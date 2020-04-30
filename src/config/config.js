@@ -1,5 +1,5 @@
 var config = {
-    server_url: 'http://localhost:8080'
+    server_url: 'https://my-json-server.typicode.com/jazminsofiaf'
 };
 if(process.env.NODE_ENV === 'development'){
     console.log('dev');

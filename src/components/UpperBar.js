@@ -27,6 +27,17 @@ function HideOnScroll(props) {
     );
 }
 
+function Line( ) {
+    return (
+        <hr style={{
+                color: 'black',
+                backgroundColor: 'black',
+                height: 2
+            }}
+        />
+    );
+}
+
 
 class UpperBar extends React.Component {
     constructor(props) {
@@ -64,6 +75,24 @@ class UpperBar extends React.Component {
         this.props.history.push('/login');
     }
 
+    handleClients = () => {
+        console.log("clientes");
+        this.handleCloseMenu();
+        this.props.history.push('/backoffice/clients');
+    }
+
+    handleProviders = () => {
+        console.log("proveedores");
+        this.handleCloseMenu();
+        this.props.history.push('/backoffice/providers');
+    }
+
+    handleProducts = () => {
+        console.log("editar productos");
+        this.handleCloseMenu();
+        this.props.history.push('/backoffice/products');
+    }
+
     goHomePage = () => {
         console.log("go products Page");
         this.props.history.push('/home');
@@ -76,18 +105,21 @@ class UpperBar extends React.Component {
 
     goContactUsPage = () => {
         console.log("go contact Page");
-        this.props.history.push('/contact-us');
+        this.props.history.push('/contactUs');
     }
 
     goFAQ = () => {
-        console.log("go contact Page");
+        console.log("go faq Page");
         this.props.history.push('/faq');
     }
+
 
 
     render() {
         const {classes} = this.props;
         const open = Boolean(this.state.anchorEl);
+        const isLogged =  !(authToken.getToken() === null);
+        const admin =  isLogged && (authToken.getToken() === 'admin');;
 
         return (
             <div>
@@ -106,7 +138,7 @@ class UpperBar extends React.Component {
                                 <Button variant="text" className={classes.menuBarItem}
                                         onClick={this.goProductsPage}>Productos</Button>
                                 <Button variant="text" className={classes.menuBarItem}
-                                        onClick={this.goContactUsPage}>Preguntas frecuentes</Button>
+                                        onClick={this.goFAQ}>Preguntas frecuentes</Button>
                                 <Button variant="text" className={classes.menuBarItem}
                                         onClick={this.goContactUsPage}>Contactenos</Button>
                             </nav>
@@ -133,8 +165,21 @@ class UpperBar extends React.Component {
                                     }}
                                     open={open}
                                     onClose={this.handleCloseMenu}>
-                                    <MenuItem onClick={this.handleMyAccount}>Mi cuenta</MenuItem>
-                                    <MenuItem onClick={this.handleLogOut}>Salir</MenuItem>
+                                    { isLogged ?
+                                        (<div>
+                                                <MenuItem onClick={this.handleMyAccount}>Mi cuenta</MenuItem>
+                                                <MenuItem onClick={this.handleLogOut}>Salir</MenuItem>
+                                            {admin &&
+                                                (<div>
+                                                    <Line/>
+                                                    <MenuItem onClick={this.handleProducts}>Editar Productos</MenuItem>
+                                                    <MenuItem onClick={this.handleClients}>Clientes</MenuItem>
+                                                    <MenuItem onClick={this.handleProviders}>Proveedores</MenuItem>
+                                                </div>)
+                                            }
+                                        </div>)
+                                        : (  <MenuItem onClick={this.handleLogOut}>Iniciar Sesion</MenuItem>)
+                                    }
                                 </Menu>
                             </div>
                         </Toolbar>
