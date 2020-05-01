@@ -1,0 +1,89 @@
+import React from 'react';
+import withStyles from "@material-ui/core/styles/withStyles";
+import SearchFilter from "./SearchFilter";
+import Button from "@material-ui/core/Button";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import Fade from "@material-ui/core/Fade";
+import Box from "@material-ui/core/Box";
+import SearchIcon from "@material-ui/icons/Search";
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+
+
+class FilterBar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            anchorEl: null,
+        }
+    }
+
+    handleClick = (event) => {
+        this.setState({
+            anchorEl: event.currentTarget,
+        })
+    };
+
+
+    handleClose = () => {
+        this.setState({
+            anchorEl: null,
+        })
+    };
+
+
+
+    render() {
+        const {
+            classes,
+            categoryList, categoryName, onFilterClick,
+        }  = this.props;
+        const open = Boolean(this.state.anchorEl);
+        return (
+            <div>
+                <Box display="flex" flexDirection="row-reverse" p={1} m={1} >
+                    <SearchFilter stateKey="search" search={this.props.search} onTextChange={this.props.onTextChange}/>
+                    <Box display="flex" flexDirection="row" p={1} m={1} >
+                        <Box p={1} onClick={this.handleClick}>
+                            <KeyboardArrowDownIcon />
+                        </Box>
+                        <Box p={0} >
+                            <div>
+                                <Button aria-controls="fade-menu" aria-haspopup="true" onClick={this.handleClick} className={classes.menuButton}>
+                                    Categoria
+                                </Button>
+                                <Menu
+                                    id="fade-menu"
+                                    anchorEl={this.state.anchorEl}
+                                    keepMounted
+                                    open={open}
+                                    onClose={this.handleClose}
+                                    TransitionComponent={Fade}
+                                >
+                                    {categoryList.map(category => (
+                                        <MenuItem  key={category} name={categoryName} onClick={onFilterClick(category)}>
+                                            {category}
+                                        </MenuItem>
+                                    ))}
+                                </Menu>
+                            </div>
+                        </Box>
+                    </Box>
+                </Box>
+            </div>
+        );
+    }
+}
+
+
+const styles = theme => ({
+    container: {
+        overflow: 'auto',
+    },
+    menuButton: {
+        textTransform: 'none',
+    }
+
+});
+
+export default withStyles(styles)(FilterBar);

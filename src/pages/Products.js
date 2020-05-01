@@ -4,7 +4,9 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
 import Toolbar from "@material-ui/core/Toolbar";
 import UpperBar from "../components/UpperBar";
-import FilterDrawer from "../components/FilterDrawer";
+import FilterBar from "../components/FilterBar";
+import ShopDrawer from "../components/ShopDrawer";
+import Box from "@material-ui/core/Box";
 
 
 
@@ -59,19 +61,18 @@ class ProductList extends React.Component{
         return(
             <div className={classes.root}>
                 <UpperBar/>
-                <FilterDrawer
-                    categoryList={this.state.categories}
-                    categoryName={this.state.category}
-                    onFilterClick={this.handleOnFilterClick.bind(this)}
-                    stateKey="search"
-                    search={this.state.search}
-                    onTextChange={this.handleTextChange.bind(this)}
-                />
                 <main className={classes.content}>
                     <Toolbar />
                     <div>
-                        <div className={classes.products}>
-                            <Grid container spacing={3}>
+                        <FilterBar
+                            categoryList={this.state.categories}
+                            categoryName={this.state.category}
+                            onFilterClick={this.handleOnFilterClick.bind(this)}
+                            stateKey="search"
+                            search={this.state.search}
+                            onTextChange={this.handleTextChange.bind(this)}
+                        />
+                        <Box display="flex" flexDirection="row-reverse" p={1} m={1} className={classes.products}>
                                 {this.state.products.map((product, i) =>{
                                     if((this.state.category === 'Todos' || product.id %2 === 0)
                                         &&
@@ -82,10 +83,10 @@ class ProductList extends React.Component{
                                             </div>
                                         )
                                 })}
-                            </Grid>
-                        </div>
+                        </Box>
                     </div>
                 </main>
+                <ShopDrawer/>
             </div>
             );
     }
@@ -94,7 +95,7 @@ class ProductList extends React.Component{
 const styles = theme => ({
     products: {
         display: 'flex',
-        flexFlow: 'row wrap',
+        flexFlow: 'row-reverse wrap',
         marginTop: '0px',
     },
     root: {

@@ -13,13 +13,12 @@ class SearchFilter extends React.Component{
     render(){
         const { classes, onTextChange, search, stateKey } = this.props;
         return (
-
-            <div style={{ width: '100%' }}>
-                <Box display="flex" flexDirection="row" p={1} m={1} bgcolor="background.paper">
-                    <Box p={1} bgcolor="grey.300">
+            <div>
+                <Box display="flex" flexDirection="row" p={1} m={1} >
+                    <Box p={1} bgcolor="grey.300" style={{borderRadius: '10px 0px 0px 10px'}} >
                         <SearchIcon />
                     </Box>
-                    <Box p={0} bgcolor="grey.300">
+                    <Box p={0} bgcolor="grey.300" style={{borderRadius: '0px 10px 10px 0px'}} >
                         <InputBase
                             placeholder="Buscar..."
                             classes={{
@@ -30,7 +29,6 @@ class SearchFilter extends React.Component{
                             onChange={onTextChange(stateKey)}
                         />
                     </Box>
-
                 </Box>
             </div>
         );

@@ -3,24 +3,17 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Drawer from "@material-ui/core/Drawer";
 import Toolbar from "@material-ui/core/Toolbar";
 import Divider from "@material-ui/core/Divider";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 import Hidden from "@material-ui/core/Hidden";
-import SearchFilter from "./SearchFilter";
 
 
-class FilterDrawer extends React.Component {
+class ShopDrawer extends React.Component {
     constructor(props) {
         super(props);
     }
 
-
-
     render() {
         const {
             classes,
-            categoryList, categoryName, onFilterClick,
         }  = this.props;
         return (
             <Hidden only={['sm', 'xs']}>
@@ -29,21 +22,11 @@ class FilterDrawer extends React.Component {
                     variant="permanent"
                     classes={{
                         paper: classes.drawerPaper,
-                    }}>
+                    }}
+                    anchor="right">
                     <Toolbar />
                     <div className={classes.drawerContainer}>
                         <Divider />
-                        <SearchFilter stateKey="search" search={this.props.search} onTextChange={this.props.onTextChange}/>
-                        <List>
-                            {categoryList.map(category => (
-                                <ListItem button
-                                          key={category}
-                                          name={categoryName}
-                                          onClick={onFilterClick(category)}>
-                                    <ListItemText primary={category} />
-                                </ListItem>
-                            ))}
-                        </List>
                     </div>
                 </Drawer>
             </Hidden>
@@ -69,4 +52,4 @@ const styles = theme => ({
 
 });
 
-export default withStyles(styles)(FilterDrawer);
+export default withStyles(styles)(ShopDrawer);
