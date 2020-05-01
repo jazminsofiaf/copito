@@ -7,6 +7,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Hidden from "@material-ui/core/Hidden";
+import SearchFilter from "./SearchFilter";
 
 
 class FilterDrawer extends React.Component {
@@ -15,8 +16,12 @@ class FilterDrawer extends React.Component {
     }
 
 
+
     render() {
-        const { classes, categoryList,  categoryName, onFilterClick }  = this.props;
+        const {
+            classes,
+            categoryList, categoryName, onFilterClick,
+        }  = this.props;
         return (
             <Hidden only={['sm', 'xs']}>
                 <Drawer
@@ -28,6 +33,7 @@ class FilterDrawer extends React.Component {
                     <Toolbar />
                     <div className={classes.drawerContainer}>
                         <Divider />
+                        <SearchFilter stateKey="search" search={this.props.search} onTextChange={this.props.onTextChange}/>
                         <List>
                             {categoryList.map(category => (
                                 <ListItem button

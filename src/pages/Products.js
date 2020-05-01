@@ -13,6 +13,7 @@ class ProductList extends React.Component{
         super(props);
         this.state = {
             products: [],
+            search: '',
             categories: ["Todos","Medicamentos", "Alimentos", "juguetes"],
             category: 'Todos',
         }
@@ -46,6 +47,10 @@ class ProductList extends React.Component{
             {category: name}
         )
     };
+    handleTextChange= name => event => {
+        console.log(event.target.value);
+        this.setState({ [name] : event.target.value });
+    };
 
 
 
@@ -57,14 +62,20 @@ class ProductList extends React.Component{
                 <FilterDrawer
                     categoryList={this.state.categories}
                     categoryName={this.state.category}
-                    onFilterClick={this.handleOnFilterClick.bind(this)}/>
+                    onFilterClick={this.handleOnFilterClick.bind(this)}
+                    stateKey="search"
+                    search={this.state.search}
+                    onTextChange={this.handleTextChange.bind(this)}
+                />
                 <main className={classes.content}>
                     <Toolbar />
                     <div>
                         <div className={classes.products}>
                             <Grid container spacing={3}>
                                 {this.state.products.map((product, i) =>{
-                                    if(this.state.category === 'Todos' || product.id %2 === 0)
+                                    if((this.state.category === 'Todos' || product.id %2 === 0)
+                                        &&
+                                        (product.name.toLowerCase().includes(this.state.search.toLowerCase())))
                                         return(
                                             <div key={i}>
                                                 <ProductCard product={product}/>
