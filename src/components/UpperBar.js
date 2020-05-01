@@ -14,6 +14,8 @@ import Hidden from "@material-ui/core/Hidden";
 import authToken from "../providers/authToken";
 import withStyles from "@material-ui/core/styles/withStyles";
 import {withRouter} from 'react-router-dom';
+import Badge from "@material-ui/core/Badge";
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 
 function HideOnScroll(props) {
@@ -118,6 +120,7 @@ class UpperBar extends React.Component {
     render() {
         const {classes} = this.props;
         const open = Boolean(this.state.anchorEl);
+        const shopCartCount = 2;
         const isLogged =  !(authToken.getToken() === null);
         const admin =  isLogged && (authToken.getToken() === 'admin');;
 
@@ -182,6 +185,11 @@ class UpperBar extends React.Component {
                                     }
                                 </Menu>
                             </div>
+                            <div>
+                                <Badge color="secondary" badgeContent={shopCartCount}>
+                                    <ShoppingCartIcon />
+                                </Badge>
+                            </div>
                         </Toolbar>
                     </AppBar>
                 </HideOnScroll>
@@ -208,6 +216,7 @@ const styles = theme => ({
         textAlign: 'left',
         flexGrow: 1,
     },
+
     menuBar: {
         justifyContent: 'center',
         alignItems: 'center',

@@ -24,13 +24,13 @@ const theme = createMuiTheme({
     palette: {
         type: 'light',
         background: {
-            default: 'antiquewhite',
+            default: '#FFFAF0',
         },
         primary: {
-            main: '#BC4639',
+            main:  '#f2513f',
         },
         secondary: {
-            main: '#5C2018',
+            main: '#25a1ba',
         },
     },
     spacing: 8,

@@ -5,8 +5,19 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import withStyles from "@material-ui/core/styles/withStyles";
+import GridList from "@material-ui/core/GridList";
+import GridListTile from "@material-ui/core/GridListTile";
+import GridListTileBar from "@material-ui/core/GridListTileBar";
+import authToken from "../providers/authToken";
+import ProductModal from "./ProductModal";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import Avatar from "@material-ui/core/Avatar";
+import {Box, Divider} from "@material-ui/core";
+import Tooltip from "@material-ui/core/Tooltip";
+import Fab from "@material-ui/core/Fab";
 
 class ProductCard extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {show: false};
@@ -17,12 +28,36 @@ class ProductCard extends React.Component {
         this.setState({show: true})
     }
 
+    closeDialog(){
+        this.setState({ show: false });
+    }
+
+    renderModal(product){
+        return <ProductModal open={this.state.show} product={product} handleClose={this.closeDialog.bind(this)}/>
+    }
+
+    handleAddTodCart(){
+        console.log("add to card");
+    }
+
+
 
     render() {
         const { classes, product } = this.props;
+        const isLogged =  !(authToken.getToken() === null);
         return (
-            <div>
-                <Card className={classes.card} onClick={this.openDialog}>
+            <div style={{position:'relative'}}>
+                <div className={classes.cartIconContainer}>
+                    <Tooltip title="Agregar al carrito"
+                             aria-label="add"
+                             className={classes.overlap}
+                             onClick={this.handleAddTodCart}>
+                        <Fab color="secondary">
+                            <ShoppingCartIcon/>
+                        </Fab>
+                    </Tooltip>
+                </div>
+                <Card className={classes.card} >
                     <CardActionArea>
                         <CardMedia
                             className={classes.media}
@@ -30,11 +65,27 @@ class ProductCard extends React.Component {
                             src={this.state.mainImage}
                             title="Producto"
                             height="300"
+                            onClick={this.openDialog}
                         />
                         <CardContent>
-                            <Typography >
-                                {product.name}
-                            </Typography>
+                            <div>
+                                {this.renderModal(product)}
+                                <Typography gutterBottom variant="h5" component="h2">
+                                    {product.name}
+                                </Typography>
+                                <Typography variant="body2" color="textSecondary" component="p">
+                                    {product.description}
+                                </Typography>
+                            </div>
+                            <Divider/>
+                            {isLogged && (
+                                <GridList cellHeight={56} style={{padding:10}}>
+                                    <GridListTile >
+                                        <GridListTileBar title={product.price + '$'} className={classes.price} />
+                                    </GridListTile>
+                                    <GridListTile />
+                                </GridList>
+                            )}
                         </CardContent>
                     </CardActionArea>
                 </Card>
@@ -44,14 +95,32 @@ class ProductCard extends React.Component {
 }
 
 const styles = theme => ({
+    cartIconContainer: {
+        position:'absolute',
+        zIndex: 2,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        '& > *': {
+            margin: theme.spacing(0),
+        },
+    },
+    overlap: {
+        color: theme.palette.getContrastText(theme.palette.secondary.main),
+        backgroundColor: theme.palette.secondary.main,
+    },
     card: {
         maxWidth: 300,
         margin: 20,
         width: 300,
     },
+    price: {
+        backgroundColor: theme.palette.secondary.main,
+    },
     media: {
         objectFit: 'cover',
     },
+
 });
 
 export default withStyles(styles)(ProductCard);

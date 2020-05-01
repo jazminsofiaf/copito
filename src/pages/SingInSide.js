@@ -129,7 +129,7 @@ class SignInSide extends React.Component{
                                 required
                                 fullWidth
                                 id="email"
-                                label="Email Address"
+                                label="Email"
                                 name="email"
                                 autoComplete="email"
                                 onChange={this.handleInputChange}
@@ -141,7 +141,7 @@ class SignInSide extends React.Component{
                                 required
                                 fullWidth
                                 name="password"
-                                label="Password"
+                                label="Contraseña"
                                 type="password"
                                 id="password"
                                 onChange={this.handleInputChange}
@@ -149,7 +149,7 @@ class SignInSide extends React.Component{
                             />
                             <FormControlLabel
                                 control={<Checkbox value="remember" color="primary" />}
-                                label="Remember me"
+                                label="Recuerdame"
                             />
                             <Button
                                 type="submit"
@@ -158,7 +158,7 @@ class SignInSide extends React.Component{
                                 color="primary"
                                 className={classes.submit}
                             >
-                                Sign In
+                               Iniciar sesion
                             </Button>
                             <Grid container>
                                 <Grid item xs>
