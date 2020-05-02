@@ -1,10 +1,8 @@
-
 import React from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import withStyles from "@material-ui/core/styles/withStyles";
 import InputBase from "@material-ui/core/InputBase";
 import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
 
 const defaultProps = {
     bgcolor: 'background.paper',
@@ -59,8 +57,8 @@ const styles = theme => ({
         paddingTop: theme.spacing.unit,
         paddingRight: theme.spacing.unit,
         paddingBottom: theme.spacing.unit,
-        paddingLeft: theme.spacing.unit * 10,
-        //transition: theme.transitions.create('width'),
+        paddingLeft: theme.spacing.unit ,
+        transition: theme.transitions.create('width'),
         width: '100%',
         height: '100%',
 

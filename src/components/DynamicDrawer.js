@@ -129,22 +129,20 @@ export default function DynamicDrawer(props) {
         <div className={classes.root}>
             <CssBaseline />
             <main className={clsx(classes.content, {[classes.contentShift]: open})} >
-                {open && (<Toolbar/>)}
-                <Box  display="flex" flexDirection="row-reverse">
+                <Toolbar className={classes.shopIconBarContent}>
                     <Box >
-                    <Box mt={1} width="100%" bgcolor={theme.palette.secondary.main} style={{borderRadius: '25px 0px 0px 25px'}} >
-                        <IconButton
-                            aria-label="open drawer"
-                            edge="end"
-                            onClick={handleDrawerOpen}
-                            className={clsx(open && classes.hide)}
-                        >
-                            <ChevronLeftIcon />
-                            <ShoppingCartIcon />
-                        </IconButton>
+                        <Box  mr={0} width="100%" bgcolor={theme.palette.secondary.main} style={{borderRadius: '25px 0px 0px 25px'}} >
+                            <IconButton
+                                aria-label="open drawer"
+                                onClick={handleDrawerOpen}
+                                className={clsx(open && classes.hide)}
+                            >
+                                <ChevronLeftIcon />
+                                <ShoppingCartIcon/>
+                            </IconButton>
+                        </Box>
                     </Box>
-                    </Box>
-                </Box>
+                </Toolbar>
                 <Box mr={3} ml={3}>
                     {props.children}
                 </Box>
@@ -164,7 +162,13 @@ const useStyles = makeStyles(theme => ({
     root: {
         display: "flex"
     },
-
+    shopIconBarContent:{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        marginRight: 0,
+        paddingRight: 0,
+    },
     title: {
         flexGrow: 1
     },
