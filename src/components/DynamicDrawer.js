@@ -13,6 +13,16 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Toolbar from "@material-ui/core/Toolbar";
 import Box from "@material-ui/core/Box";
 import useTheme from "@material-ui/core/styles/useTheme";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import Fab from "@material-ui/core/Fab";
+import Typography from "@material-ui/core/Typography";
+import CardContent from "@material-ui/core/CardContent";
+import Paper from "@material-ui/core/Paper";
+import TableContainer from "@material-ui/core/TableContainer";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
 
 
 
@@ -34,7 +44,7 @@ export default function DynamicDrawer(props) {
     return (
         <div className={classes.root}>
             <CssBaseline />
-            <main style={{backgroundColor:'blue'}}
+            <main
                   className={clsx(classes.content, {
                       [classes.contentShift]: open
                   })}
@@ -57,26 +67,47 @@ export default function DynamicDrawer(props) {
                         <IconButton onClick={handleDrawerClose}>
                             <ChevronRightIcon />
                         </IconButton>
+                        <ShoppingCartIcon/>
+                        <Typography component="h4" variant="h5" className={classes.mainTitle}>
+                            Carrito de compras
+                        </Typography>
                     </div>
                     <Divider />
-                    <List>
-                        {props.products.map(product => {
-                            if (props.cart[product.id] !== undefined)
-                                return (
-                                    <ListItem button key={product.name}>
-                                        <ListItemText primary={product.name}>
-                                            {product.name}
-                                        </ListItemText>
-                                        <ListItemText >
-                                            {props.cart[product.id]}
-                                        </ListItemText>
-                                    </ListItem>
-                                )
-                        })}
-                    </List>
+
+                    <TableContainer component={Paper}>
+                        <Table className={classes.table} aria-label="caption table">
+                            <TableBody>
+                                {props.products.map(product => {
+                                    if (props.cart[product.id] !== undefined)
+                                        return (
+                                    <TableRow key={product.name}>
+
+                                        <TableCell align="right">{props.cart[product.id] + 'x'}</TableCell>
+                                        <TableCell align="right">{product.name}</TableCell>
+                                        <TableCell align="right"> {product.price + '$' }</TableCell>
+                                        <TableCell align="right">{product.price * props.cart[product.id] + '$' }</TableCell>
+                                    </TableRow>)
+                                })}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    { Object.keys(props.cart).length > 0 &&
+                    (<ListItem key={'total'}>
+                        <ListItemText style={{flexGrow:1}}>
+                            TOTAL
+                        </ListItemText>
+                        <ListItemText style={{flexGrow:0}}>
+                            {
+                                Object.entries(props.cart).map( ([productId, cant]) =>{
+                                    const p = props.products.filter(product => product.id == productId).map(prod => prod.price);
+                                    return cant * p;
+                                }).reduce((price1, price2) => price1 + price2, 0) + '$'
+                            }
+                        </ListItemText>
+                    </ListItem>)}
                 </Drawer>
             )}
-            <div style={{backgroundColor:'red'}}>
+            <div>
             <Box mt={2} bgcolor={theme.palette.secondary.main} style={{borderRadius: '25px 0px 0px 25px'}} >
                 <IconButton
                     aria-label="open drawer"
@@ -85,6 +116,7 @@ export default function DynamicDrawer(props) {
                     className={clsx(open && classes.hide)}
                 >
                     <ChevronLeftIcon />
+                    <ShoppingCartIcon />
                 </IconButton>
             </Box>
             </div>
@@ -122,6 +154,7 @@ const useStyles = makeStyles(theme => ({
 
     },
     drawerHeader: {
+        backgroundColor: theme.palette.secondary.main,
         display: "flex",
         alignItems: "center",
         padding: theme.spacing(0, 1),

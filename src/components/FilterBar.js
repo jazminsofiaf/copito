@@ -1,6 +1,5 @@
 import React from 'react';
 import withStyles from "@material-ui/core/styles/withStyles";
-import SearchFilter from "./SearchFilter";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -40,8 +39,7 @@ class FilterBar extends React.Component {
         const open = Boolean(this.state.anchorEl);
         return (
             <div>
-                <Box display="flex" flexDirection="row-reverse" pl={1} ml={1} >
-                    <SearchFilter stateKey="search" search={this.props.search} onTextChange={this.props.onTextChange}/>
+                <Box display="flex" flexDirection="row-reverse" pr={4} ml={1} >
                     <Box display="flex" flexDirection="row"  >
                         <Box pt={3} onClick={this.handleClick}>
                             <KeyboardArrowDownIcon />

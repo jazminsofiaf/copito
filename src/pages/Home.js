@@ -21,7 +21,7 @@ class Home extends React.Component{
 
                     <Grid container spacing={3} className={classes.image}>
                         <Grid item xs={false} sm={4} md={7} ></Grid>
-                        <Grid item xs={12} sm={8} md={5} elevation={6} square className={classes.titleContainer}>
+                        <Grid item xs={12} sm={8} md={5} elevation={6}  className={classes.titleContainer}>
                             <Box  p={3} >
                                 <Box display="flex" justifyContent="flex-start" >
                                     <Typography variant="h3" noWrap className={classes.mainTitle}>

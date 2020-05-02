@@ -6,7 +6,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import FilterBar from "../components/FilterBar";
 import Box from "@material-ui/core/Box";
 import ProductCard from "../components/ProductCard";
-import {clone} from "@babel/types";
+import SearchFilter from "../components/SearchFilter";
 
 
 
@@ -85,13 +85,15 @@ class Prueba extends React.Component{
                     <Toolbar />
                     <DynamicDrawer products={this.state.products} cart={this.state.cart}>
                         <div>
+                            <SearchFilter
+                                stateKey="search"
+                                search={this.state.search}
+                                onTextChange={this.handleTextChange.bind(this)}
+                            />
                             <FilterBar
                                 categoryList={this.state.categories}
                                 categoryName={this.state.category}
                                 onFilterClick={this.handleOnFilterClick.bind(this)}
-                                stateKey="search"
-                                search={this.state.search}
-                                onTextChange={this.handleTextChange.bind(this)}
                             />
                             <Box display="flex" flexDirection="row-reverse" className={classes.products}>
                                 {this.state.products.map((product, i) =>{
