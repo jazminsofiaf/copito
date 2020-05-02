@@ -10,7 +10,8 @@
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.1",
     "react-test-renderer": "^16.8.6",
-    "react-router-dom": "latest"
+    "react-router-dom": "latest",
+    "clsx": "latest"
   },
   "scripts": {
     "start": "react-scripts start",

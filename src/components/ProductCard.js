@@ -11,7 +11,6 @@ import GridListTileBar from "@material-ui/core/GridListTileBar";
 import authToken from "../providers/authToken";
 import ProductModal from "./ProductModal";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import Avatar from "@material-ui/core/Avatar";
 import {Box, Divider} from "@material-ui/core";
 import Tooltip from "@material-ui/core/Tooltip";
 import Fab from "@material-ui/core/Fab";

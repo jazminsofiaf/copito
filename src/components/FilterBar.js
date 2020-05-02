@@ -41,13 +41,13 @@ class FilterBar extends React.Component {
         const open = Boolean(this.state.anchorEl);
         return (
             <div>
-                <Box display="flex" flexDirection="row-reverse" p={1} m={1} >
+                <Box display="flex" flexDirection="row-reverse" pl={1} ml={1} >
                     <SearchFilter stateKey="search" search={this.props.search} onTextChange={this.props.onTextChange}/>
-                    <Box display="flex" flexDirection="row" p={1} m={1} >
-                        <Box p={1} onClick={this.handleClick}>
+                    <Box display="flex" flexDirection="row"  >
+                        <Box pt={3} onClick={this.handleClick}>
                             <KeyboardArrowDownIcon />
                         </Box>
-                        <Box p={0} >
+                        <Box pt={3} >
                             <div>
                                 <Button aria-controls="fade-menu" aria-haspopup="true" onClick={this.handleClick} className={classes.menuButton}>
                                     Categoria

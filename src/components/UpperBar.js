@@ -14,9 +14,7 @@ import Hidden from "@material-ui/core/Hidden";
 import authToken from "../providers/authToken";
 import withStyles from "@material-ui/core/styles/withStyles";
 import {withRouter} from 'react-router-dom';
-import Badge from "@material-ui/core/Badge";
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-
+import HomeIcon from '@material-ui/icons/Home';
 
 function HideOnScroll(props) {
     const { children, window } = props;
@@ -120,7 +118,6 @@ class UpperBar extends React.Component {
     render() {
         const {classes} = this.props;
         const open = Boolean(this.state.anchorEl);
-        const shopCartCount = 2;
         const isLogged =  !(authToken.getToken() === null);
         const admin =  isLogged && (authToken.getToken() === 'admin');;
 
@@ -131,21 +128,26 @@ class UpperBar extends React.Component {
                     <AppBar position="fixed" className={classes.appBar}>
                         <Toolbar className={classes.toolbar}>
                             <Hidden only={['sm', 'xs']}>
-                                <Typography variant="h6" noWrap className={classes.mainTitle}>
+                                <Typography variant="h6" noWrap className={classes.mainTitle} onClick={this.goHomePage}>
                                     Florida Productos veterinarios
                                 </Typography>
                             </Hidden>
                             <nav className={classes.menuBar}>
-                                <Button variant="text" className={classes.menuBarItem}
-                                        onClick={this.goHomePage}>Inicio</Button>
+                                <IconButton
+                                    aria-label="account of current user"
+                                    aria-controls="menu-appbar"
+                                    aria-haspopup="true"
+                                    color="inherit"
+                                    className={classes.menuBarItem}
+                                    onClick={this.goHomePage}>
+                                    <HomeIcon/>
+                                </IconButton>
                                 <Button variant="text" className={classes.menuBarItem}
                                         onClick={this.goProductsPage}>Productos</Button>
                                 <Button variant="text" className={classes.menuBarItem}
                                         onClick={this.goFAQ}>Preguntas frecuentes</Button>
                                 <Button variant="text" className={classes.menuBarItem}
                                         onClick={this.goContactUsPage}>Contactenos</Button>
-                            </nav>
-                            <div>
                                 <IconButton
                                     aria-label="account of current user"
                                     aria-controls="menu-appbar"
@@ -154,6 +156,8 @@ class UpperBar extends React.Component {
                                     color="inherit">
                                     <AccountCircle/>
                                 </IconButton>
+                            </nav>
+                            <div>
                                 <Menu
                                     id="menu-appbar"
                                     anchorEl={this.state.anchorEl}
@@ -184,11 +188,6 @@ class UpperBar extends React.Component {
                                         : (  <MenuItem onClick={this.handleLogOut}>Iniciar Sesion</MenuItem>)
                                     }
                                 </Menu>
-                            </div>
-                            <div>
-                                <Badge color="secondary" badgeContent={shopCartCount}>
-                                    <ShoppingCartIcon />
-                                </Badge>
                             </div>
                         </Toolbar>
                     </AppBar>
