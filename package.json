@@ -3,15 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/lab": "^4.0.0-alpha.51",
+    "clsx": "latest",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "nvm": "0.0.4",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "3.0.1",
-    "react-test-renderer": "^16.8.6",
     "react-router-dom": "latest",
-    "clsx": "latest"
+    "react-scripts": "3.0.1",
+    "react-test-renderer": "^16.8.6"
   },
   "scripts": {
     "start": "react-scripts start",

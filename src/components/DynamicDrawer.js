@@ -3,7 +3,6 @@ import clsx from "clsx";
 import { makeStyles} from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
@@ -14,21 +13,22 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Box from "@material-ui/core/Box";
 import useTheme from "@material-ui/core/styles/useTheme";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import Fab from "@material-ui/core/Fab";
 import Typography from "@material-ui/core/Typography";
-import CardContent from "@material-ui/core/CardContent";
 import Paper from "@material-ui/core/Paper";
 import TableContainer from "@material-ui/core/TableContainer";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
+import authToken from "../providers/authToken";
+import MuiAlert from '@material-ui/lab/Alert';
 
 
 
 export default function DynamicDrawer(props) {
     const classes = useStyles();
     const theme = useTheme();
+    const isLogged =  !(authToken.getToken() === null);
     const isDesktop = window.innerWidth > 900;
     const [open, setOpen] = React.useState(isDesktop);
 
@@ -41,45 +41,21 @@ export default function DynamicDrawer(props) {
         setOpen(false);
     };
 
-    return (
-        <div className={classes.root}>
-            <CssBaseline />
-            <main
-                  className={clsx(classes.content, {
-                      [classes.contentShift]: open
-                  })}
-            >
-                {props.children}
+    const getSum = () => {
+        return Object.entries(props.cart).map( ([productId, cant]) =>{
+            const p = props.products.filter(product => product.id == productId).map(prod => prod.price);
+            return cant * p;
+        }).reduce((price1, price2) => price1 + price2, 0) + '$'
+    }
 
-            </main>
-            { (open &&
-                <Drawer
-                    className={classes.drawer}
-                    variant="persistent"
-                    anchor="right"
-                    open={open}
-                    classes={{
-                        paper: classes.drawerPaper
-                    }}
-                >
-                    <Toolbar />
-                    <div className={classes.drawerHeader}>
-                        <IconButton onClick={handleDrawerClose}>
-                            <ChevronRightIcon />
-                        </IconButton>
-                        <ShoppingCartIcon/>
-                        <Typography component="h4" variant="h5" className={classes.mainTitle}>
-                            Carrito de compras
-                        </Typography>
-                    </div>
-                    <Divider />
-
-                    <TableContainer component={Paper}>
-                        <Table className={classes.table} aria-label="caption table">
-                            <TableBody>
-                                {props.products.map(product => {
-                                    if (props.cart[product.id] !== undefined)
-                                        return (
+    const renderCartIcons = () => {
+        return (<div>
+            <TableContainer component={Paper}>
+                <Table className={classes.table} aria-label="caption table">
+                    <TableBody>
+                        {props.products.map(product => {
+                            if (props.cart[product.id] !== undefined)
+                                return (
                                     <TableRow key={product.name}>
 
                                         <TableCell align="right">{props.cart[product.id] + 'x'}</TableCell>
@@ -87,45 +63,102 @@ export default function DynamicDrawer(props) {
                                         <TableCell align="right"> {product.price + '$' }</TableCell>
                                         <TableCell align="right">{product.price * props.cart[product.id] + '$' }</TableCell>
                                     </TableRow>)
-                                })}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                    { Object.keys(props.cart).length > 0 &&
-                    (<ListItem key={'total'}>
-                        <ListItemText style={{flexGrow:1}}>
-                            TOTAL
-                        </ListItemText>
-                        <ListItemText style={{flexGrow:0}}>
-                            {
-                                Object.entries(props.cart).map( ([productId, cant]) =>{
-                                    const p = props.products.filter(product => product.id == productId).map(prod => prod.price);
-                                    return cant * p;
-                                }).reduce((price1, price2) => price1 + price2, 0) + '$'
-                            }
-                        </ListItemText>
-                    </ListItem>)}
-                </Drawer>
-            )}
-            <div>
-            <Box mt={2} bgcolor={theme.palette.secondary.main} style={{borderRadius: '25px 0px 0px 25px'}} >
-                <IconButton
-                    aria-label="open drawer"
-                    edge="end"
-                    onClick={handleDrawerOpen}
-                    className={clsx(open && classes.hide)}
-                >
-                    <ChevronLeftIcon />
-                    <ShoppingCartIcon />
+                        })}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            { Object.keys(props.cart).length > 0 &&
+            (<ListItem key={'total'}>
+                <ListItemText style={{flexGrow:1}}>
+                    TOTAL
+                </ListItemText>
+                <ListItemText style={{flexGrow:0}}>
+                    {
+                        getSum()
+                    }
+                </ListItemText>
+            </ListItem>)}
+        </div>)
+
+    }
+
+    const renderMustLogInMessage = () =>{
+        return (
+            <Box p={4} m={4}>
+                <MuiAlert elevation={6} variant="filled" severity="warning">Inicie Session para comprar!</MuiAlert>
+            </Box>)
+    }
+
+    const renderDrawerContent = () =>{
+        if( isLogged){
+            return renderCartIcons();
+        }
+        return renderMustLogInMessage();
+    }
+
+    const renderDrawer = () => {
+        return (
+            <Drawer
+            className={classes.drawer}
+            variant="persistent"
+            anchor="right"
+            open={open}
+            classes={{
+                paper: classes.drawerPaper
+            }}
+            >
+            <Toolbar />
+            <div className={classes.drawerHeader}>
+                <IconButton onClick={handleDrawerClose}>
+                    <ChevronRightIcon />
                 </IconButton>
-            </Box>
+                <ShoppingCartIcon/>
+                <Typography component="h4" variant="h5" className={classes.mainTitle}>
+                    Carrito de compras
+                </Typography>
             </div>
+            <Divider />
+                {
+                    renderDrawerContent()
+                }
+            </Drawer>)
+
+    }
+
+    return (
+        <div className={classes.root}>
+            <CssBaseline />
+            <main className={clsx(classes.content, {[classes.contentShift]: open})} >
+                {open && (<Toolbar/>)}
+                <Box  display="flex" flexDirection="row-reverse">
+                    <Box >
+                    <Box mt={1} width="100%" bgcolor={theme.palette.secondary.main} style={{borderRadius: '25px 0px 0px 25px'}} >
+                        <IconButton
+                            aria-label="open drawer"
+                            edge="end"
+                            onClick={handleDrawerOpen}
+                            className={clsx(open && classes.hide)}
+                        >
+                            <ChevronLeftIcon />
+                            <ShoppingCartIcon />
+                        </IconButton>
+                    </Box>
+                    </Box>
+                </Box>
+                <Box mr={3} ml={3}>
+                    {props.children}
+                </Box>
+            </main>
+            {(
+                open && renderDrawer()
+            )}
+
         </div>
     );
 }
 
 
-const drawerWidth = 350;
+const drawerWidth = '25%';
 const drawerWidthMobile = '100vw'
 const useStyles = makeStyles(theme => ({
     root: {
@@ -139,7 +172,6 @@ const useStyles = makeStyles(theme => ({
         display: "none"
     },
     drawer: {
-        width: drawerWidth,
         flexShrink: 0,
         [theme.breakpoints.down("sm")]: {
             width: drawerWidthMobile,
@@ -163,8 +195,8 @@ const useStyles = makeStyles(theme => ({
         justifyContent: "flex-start"
     },
     content: {
-        flexGrow: 1,
-        paddingLeft: theme.spacing(3),
+        //cuando esta cerrado el drower
+        width: '100vw',
         transition: theme.transitions.create("margin", {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen
@@ -175,6 +207,8 @@ const useStyles = makeStyles(theme => ({
 
     },
     contentShift: {
+        //cuando esta abierto el drower
+        width: '76%',
         transition: theme.transitions.create("margin", {
             easing: theme.transitions.easing.easeOut,
             duration: theme.transitions.duration.enteringScreen

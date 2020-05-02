@@ -1,20 +1,21 @@
 import React from 'react';
-import ProductCard from '../components/ProductCard';
-import withStyles from "@material-ui/core/styles/withStyles";
-import Grid from "@material-ui/core/Grid";
 import Toolbar from "@material-ui/core/Toolbar";
 import UpperBar from "../components/UpperBar";
+import DynamicDrawer from "../components/DynamicDrawer";
+import withStyles from "@material-ui/core/styles/withStyles";
 import FilterBar from "../components/FilterBar";
-import ShopDrawer from "../components/ShopDrawer";
 import Box from "@material-ui/core/Box";
+import ProductCard from "../components/ProductCard";
+import SearchFilter from "../components/SearchFilter";
 
 
 
-class ProductList extends React.Component{
+class Products extends React.Component{
     constructor(props){
         super(props);
         this.state = {
             products: [],
+            cart: {},
             search: '',
             categories: ["Todos","Medicamentos", "Alimentos", "juguetes"],
             category: 'Todos',
@@ -54,6 +55,21 @@ class ProductList extends React.Component{
         this.setState({ [name] : event.target.value });
     };
 
+    handleAddToCart = productId => {
+        console.log("add to card" + productId);
+        const count = this.state.cart[productId];
+        const newShopCart = this.state.cart;
+        if(count !== undefined){
+            newShopCart[productId] = count + 1;
+        }else{
+            newShopCart[productId] = 1;
+        }
+        this.setState({ cart : newShopCart});
+
+
+
+    }
+
 
 
     render() {
@@ -61,34 +77,39 @@ class ProductList extends React.Component{
         return(
             <div className={classes.root}>
                 <UpperBar/>
-                <main className={classes.content}>
+                <div>
                     <Toolbar />
-                    <div>
-                        <FilterBar
-                            categoryList={this.state.categories}
-                            categoryName={this.state.category}
-                            onFilterClick={this.handleOnFilterClick.bind(this)}
-                            stateKey="search"
-                            search={this.state.search}
-                            onTextChange={this.handleTextChange.bind(this)}
-                        />
-                        <Box display="flex" flexDirection="row-reverse" p={1} m={1} className={classes.products}>
+                    <DynamicDrawer products={this.state.products} cart={this.state.cart}>
+                        <div>
+                            <SearchFilter
+                                stateKey="search"
+                                search={this.state.search}
+                                onTextChange={this.handleTextChange.bind(this)}
+                            />
+                            <FilterBar
+                                categoryList={this.state.categories}
+                                categoryName={this.state.category}
+                                onFilterClick={this.handleOnFilterClick.bind(this)}
+                            />
+                            <Box display="flex" flexDirection="row-reverse" className={classes.products}>
                                 {this.state.products.map((product, i) =>{
                                     if((this.state.category === 'Todos' || product.id %2 === 0)
                                         &&
                                         (product.name.toLowerCase().includes(this.state.search.toLowerCase())))
                                         return(
                                             <div key={i}>
-                                                <ProductCard product={product}/>
+                                                <ProductCard product={product}
+                                                             onAddToCart={this.handleAddToCart.bind(this)}
+                                                />
                                             </div>
                                         )
                                 })}
-                        </Box>
-                    </div>
-                </main>
-                <ShopDrawer/>
+                            </Box>
+                        </div>
+                    </DynamicDrawer>
+                </div>
             </div>
-            );
+        );
     }
 }
 
@@ -101,11 +122,7 @@ const styles = theme => ({
     root: {
         display: 'flex',
     },
-    content: {
-        flexGrow: 1,
-        padding: theme.spacing(3),
-    },
 });
 
 
-export default withStyles(styles)(ProductList);
+export default withStyles(styles)(Products);

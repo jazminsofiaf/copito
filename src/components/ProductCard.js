@@ -14,13 +14,23 @@ import PlusOneIcon from '@material-ui/icons/PlusOne';
 import {Divider} from "@material-ui/core";
 import Tooltip from "@material-ui/core/Tooltip";
 import Fab from "@material-ui/core/Fab";
+import Slide from "@material-ui/core/Slide";
+import Snackbar from "@material-ui/core/Snackbar";
+
+function TransitionDown(props) {
+    return <Slide {...props} direction="down" />;
+}
 
 class ProductCard extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {show: false};
+        this.state = {
+            show: false,
+            openAlert: false,
+        };
         this.state.mainImage = (props.product.image)
+
     }
 
     openDialog = () => {
@@ -35,9 +45,31 @@ class ProductCard extends React.Component {
         return <ProductModal open={this.state.show} product={product} handleClose={this.closeDialog.bind(this)}/>
     }
 
+    handleAddToCartClick(isLogged, productId){
+        if(isLogged){
+          return this.props.onAddToCart(productId);
+        }else{
+            return this.newAlert()
+        }
+
+    }
+
+    newAlert(){
+        this.setState({
+            openAlert: true,
+        });
+
+    };
+
+    handleCloseAlert(){
+        this.setState({
+            openAlert: false,
+        });
+    };
+
 
     render() {
-        const { classes, product, onAddToCart } = this.props;
+        const { classes, product } = this.props;
         const isLogged =  !(authToken.getToken() === null);
         return (
             <div style={{position:'relative'}}>
@@ -45,11 +77,17 @@ class ProductCard extends React.Component {
                     <Tooltip title="Agregar al carrito"
                              aria-label="add"
                              className={classes.overlap}
-                             onClick={() =>onAddToCart(product.id)}>
+                             onClick={() => this.handleAddToCartClick(isLogged, product.id)}>
                         <Fab color="secondary">
                             <PlusOneIcon/>
                         </Fab>
                     </Tooltip>
+                    <Snackbar
+                        open={this.state.openAlert}
+                        onClose={() => this.handleCloseAlert(this)}
+                        TransitionComponent={TransitionDown}
+                        message="Debe iniciar Sesion para comprar"
+                    />
                 </div>
                 <Card className={classes.card} >
                     <CardActionArea>
