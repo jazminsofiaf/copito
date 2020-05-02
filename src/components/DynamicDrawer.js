@@ -85,7 +85,7 @@ export default function DynamicDrawer(props) {
     const renderMustLogInMessage = () =>{
         return (
             <Box p={4} m={4}>
-                <MuiAlert elevation={6} variant="filled" severity="warning">Inicie Session para comprar!</MuiAlert>
+                <MuiAlert elevation={6} variant="filled" severity="info"> {'\u2728'} Hola! {'\u270b'}  Si quieres agregar productos a tu carrito inicia sesion primero {'\u{1f60a}'}  </MuiAlert>
             </Box>)
     }
 
@@ -107,7 +107,7 @@ export default function DynamicDrawer(props) {
                 paper: classes.drawerPaper
             }}
             >
-            <Toolbar />
+            <Toolbar  className={classes.drawerHeader}/>
             <div className={classes.drawerHeader}>
                 <IconButton onClick={handleDrawerClose}>
                     <ChevronRightIcon />
@@ -212,12 +212,11 @@ const useStyles = makeStyles(theme => ({
     },
     contentShift: {
         //cuando esta abierto el drower
-        width: '76%',
+        marginRight: '25%',
         transition: theme.transitions.create("margin", {
             easing: theme.transitions.easing.easeOut,
             duration: theme.transitions.duration.enteringScreen
         }),
-        marginRight: 0,
         [theme.breakpoints.down("sm")]: {
             display: 'none',
         }

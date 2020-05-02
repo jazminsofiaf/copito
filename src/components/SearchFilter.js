@@ -21,7 +21,7 @@ class SearchFilter extends React.Component{
         const { classes, onTextChange, search, stateKey } = this.props;
         return (
             <Box display="flex" justifyContent="center" >
-                <Box width="50%">
+                <Box className={classes.contentBox}>
                 <Box display="flex" justifyContent="center" flexDirection="row" m={1}  >
                     <Box p={1} bgcolor="white" {...defaultProps} borderRight={0} style={{borderRadius: '10px 0px 0px 10px'}} >
                         <SearchIcon />
@@ -63,6 +63,13 @@ const styles = theme => ({
         height: '100%',
 
     },
+    contentBox:{
+        width: '50%',
+            [theme.breakpoints.down("sm")]: {
+                width: '90%',
+            }
+
+    }
 
 });
 

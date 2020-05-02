@@ -91,7 +91,7 @@ class Products extends React.Component{
                                 categoryName={this.state.category}
                                 onFilterClick={this.handleOnFilterClick.bind(this)}
                             />
-                            <Box display="flex" flexDirection="row-reverse" className={classes.products}>
+                            <Box display="flex" className={classes.products}>
                                 {this.state.products.map((product, i) =>{
                                     if((this.state.category === 'Todos' || product.id %2 === 0)
                                         &&
@@ -116,7 +116,7 @@ class Products extends React.Component{
 const styles = theme => ({
     products: {
         display: 'flex',
-        flexFlow: 'row-reverse wrap',
+        flexFlow: 'row wrap',
         marginTop: '0px',
     },
     root: {

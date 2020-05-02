@@ -16,6 +16,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Fab from "@material-ui/core/Fab";
 import Slide from "@material-ui/core/Slide";
 import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 
 function TransitionDown(props) {
     return <Slide {...props} direction="down" />;
@@ -86,7 +87,7 @@ class ProductCard extends React.Component {
                         open={this.state.openAlert}
                         onClose={() => this.handleCloseAlert(this)}
                         TransitionComponent={TransitionDown}
-                        message="Debe iniciar Sesion para comprar"
+                        message={"Hola, inicia sesion para agregar un producto al carrito"+'\u{1f60a}'}
                     />
                 </div>
                 <Card className={classes.card} >
