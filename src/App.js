@@ -18,6 +18,8 @@ import EditProviders from "./pages/Backoffice/EditProviders";
 import IconAnimation from "./components/IconAnimation"
 import CssBaseline from "@material-ui/core/CssBaseline";
 import withAdmin from "./providers/withAdmin";
+import DynamicDrawer from "./components/DynamicDrawer";
+import Prueba from "./pages/Prueba";
 
 
 const theme = createMuiTheme({
@@ -28,6 +30,7 @@ const theme = createMuiTheme({
         },
         primary: {
             main:  '#f2513f',
+            dark: '#c74436',//'#5c2018',
         },
         secondary: {
             main: '#25a1ba',
@@ -57,7 +60,7 @@ export default class App extends Component {
                                 <Route exact path="/home" component={Home}/>
                                 <Route exact path="/login" component={SingInSide}/>
                                 <Route exact path="/singUp" component={SingUp}/>
-                                <Route exact path="/products" component={Products}/>
+                                <Route exact path="/products" component={Prueba}/>
                                 <Route exact path="/contactUs" component={ContactUs}/>
                                 <Route exact path="/backoffice/clients" component={withAdmin(EditClients)}/>
                                 <Route exact path="/backoffice/products" component={withAdmin(EditProducts)}/>

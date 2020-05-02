@@ -6,7 +6,6 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Fade from "@material-ui/core/Fade";
 import Box from "@material-ui/core/Box";
-import SearchIcon from "@material-ui/icons/Search";
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 
 

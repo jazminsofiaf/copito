@@ -35,14 +35,9 @@ class ProductCard extends React.Component {
         return <ProductModal open={this.state.show} product={product} handleClose={this.closeDialog.bind(this)}/>
     }
 
-    handleAddTodCart(){
-        console.log("add to card");
-    }
-
-
 
     render() {
-        const { classes, product } = this.props;
+        const { classes, product, onAddToCart } = this.props;
         const isLogged =  !(authToken.getToken() === null);
         return (
             <div style={{position:'relative'}}>
@@ -50,7 +45,7 @@ class ProductCard extends React.Component {
                     <Tooltip title="Agregar al carrito"
                              aria-label="add"
                              className={classes.overlap}
-                             onClick={this.handleAddTodCart}>
+                             onClick={() =>onAddToCart(product.id)}>
                         <Fab color="secondary">
                             <ShoppingCartIcon/>
                         </Fab>

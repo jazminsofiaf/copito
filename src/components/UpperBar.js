@@ -142,12 +142,15 @@ class UpperBar extends React.Component {
                                     onClick={this.goHomePage}>
                                     <HomeIcon/>
                                 </IconButton>
+
                                 <Button variant="text" className={classes.menuBarItem}
-                                        onClick={this.goProductsPage}>Productos</Button>
-                                <Button variant="text" className={classes.menuBarItem}
-                                        onClick={this.goFAQ}>Preguntas frecuentes</Button>
+                                            onClick={this.goProductsPage}>Productos</Button>
                                 <Button variant="text" className={classes.menuBarItem}
                                         onClick={this.goContactUsPage}>Contactenos</Button>
+                                <Hidden only={['sm', 'xs']}>
+                                    <Button variant="text" className={classes.menuBarItem}
+                                            onClick={this.goFAQ}>Preguntas frecuentes</Button>
+                                </Hidden>
                                 <IconButton
                                     aria-label="account of current user"
                                     aria-controls="menu-appbar"
@@ -229,6 +232,8 @@ const styles = theme => ({
         [theme.breakpoints.down("sm")]: {
             flexGrow: 1,
             alignItems: 'stretch',
+            marginBottom: 0,
+            marginTop: 0,
         },
     },
 
