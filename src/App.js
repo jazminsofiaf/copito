@@ -12,9 +12,10 @@ import SingInSide from "./pages/SingInSide";
 import SingUp from "./pages/SingUp";
 import ContactUs from "./pages/ContactUs";
 import Faq from "./pages/Faq";
-import EditClients from "./pages/Backoffice/EditClients";
-import EditProducts from "./pages/Backoffice/EditProducts";
-import EditProviders from "./pages/Backoffice/EditProviders";
+import Clients from "./pages/Backoffice/Clients";
+import AdminProducts from "./pages/Backoffice/AdminProducts";
+import Providers from "./pages/Backoffice/Providers";
+import ClientOrder from "./pages/Backoffice/ClientOrder";
 import IconAnimation from "./components/IconAnimation"
 import CssBaseline from "@material-ui/core/CssBaseline";
 import withAdmin from "./providers/withAdmin";
@@ -57,12 +58,13 @@ export default class App extends Component {
                                 <Route exact path="/faq" component={Faq}/>
                                 <Route exact path="/home" component={Home}/>
                                 <Route exact path="/login" component={SingInSide}/>
-                                <Route exact path="/singUp" component={SingUp}/>
+                                <Route exact path="/sing-up" component={SingUp}/>
                                 <Route exact path="/products" component={Products}/>
-                                <Route exact path="/contactUs" component={ContactUs}/>
-                                <Route exact path="/backoffice/clients" component={withAdmin(EditClients)}/>
-                                <Route exact path="/backoffice/products" component={withAdmin(EditProducts)}/>
-                                <Route exact path="/backoffice/providers" component={withAdmin(EditProviders)}/>
+                                <Route exact path="/contact-us" component={ContactUs}/>
+                                <Route exact path="/backoffice/clients" component={withAdmin(Clients)}/>
+                                <Route exact path="/backoffice/products" component={withAdmin(AdminProducts)}/>
+                                <Route exact path="/backoffice/providers" component={withAdmin(Providers)}/>
+                                <Route exact path="/backoffice/client-order" component={withAdmin(ClientOrder)}/>
                                 <Route component={Home}/>
                             </Switch>
                         </div>

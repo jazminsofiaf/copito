@@ -29,9 +29,15 @@ function Copyright() {
 
 
 
+
+
 class SingUp extends React.Component{
     constructor(props){
         super(props);
+    }
+
+    handleSingUp = (event) => {
+        this.props.history.push('/login');
     }
     render() {
         const { classes } = this.props;
@@ -171,7 +177,7 @@ class SingUp extends React.Component{
                     </Button>
                     <Grid container justify="flex-end">
                         <Grid item>
-                            <Link href="#" variant="body2">
+                            <Link variant="body2"  onClick={this.handleSingUp}>
                                 Ya tienes una cuenta? Inicia sesion
                             </Link>
                         </Grid>

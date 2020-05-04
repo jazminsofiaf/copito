@@ -39,7 +39,7 @@ class FilterBar extends React.Component {
         const open = Boolean(this.state.anchorEl);
         return (
             <div>
-                <Box display="flex" flexDirection="row-reverse" pr={4} ml={1} >
+                <Box display="flex" flexDirection="row" pl={10} ml={1} >
                     <Box display="flex" flexDirection="row"  >
                         <Box pt={3} onClick={this.handleClick}>
                             <KeyboardArrowDownIcon />

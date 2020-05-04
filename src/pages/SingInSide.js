@@ -45,7 +45,7 @@ class SignInSide extends React.Component{
     }
 
     handleSingUp = (event) => {
-        this.props.history.push('/singup');
+        this.props.history.push('/sing-up');
     }
 
     handleForgotPassword = (event) => {

@@ -2,7 +2,7 @@ import React from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import ProductList from "../Products";
 
-class EditProducts extends React.Component{
+class AdminProducts extends React.Component{
 
     componentDidMount(){
     }
@@ -28,4 +28,4 @@ const styles = theme => ({
 });
 
 
-export default withStyles(styles)(EditProducts);
+export default withStyles(styles)(AdminProducts);

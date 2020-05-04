@@ -4,19 +4,18 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import config from "../../config/config";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-
 const server_url = config.server_url;
-class EditClients extends React.Component{
+
+class Providers extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            clients: [],
-
+            providers: [],
         }
     }
 
-    getClients() {
-        fetch(server_url +'/fake_client/db', {
+    getProviders() {
+        fetch(server_url +'/fake_providers/db', {
             method: 'get',
             headers: {
                 'Content-Type': 'application/json',
@@ -34,9 +33,8 @@ class EditClients extends React.Component{
     }
 
     componentDidMount(){
-        this.getClients();
+        this.getProviders();
     }
-
 
 
     render() {
@@ -46,7 +44,7 @@ class EditClients extends React.Component{
                 <UpperBar/>
                 <Toolbar />
                 <Typography variant="h3" noWrap className={classes.mainTitle}>
-                    Lista de Clientes
+                    Lista de proveedores
                 </Typography>
             </div>
         );
@@ -63,4 +61,4 @@ const styles = theme => ({
 });
 
 
-export default withStyles(styles)(EditClients);
+export default withStyles(styles)(Providers);

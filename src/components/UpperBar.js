@@ -92,6 +92,11 @@ class UpperBar extends React.Component {
         this.handleCloseMenu();
         this.props.history.push('/backoffice/products');
     }
+    handleClientOrder = () => {
+        console.log("generar orden de cliente");
+        this.handleCloseMenu();
+        this.props.history.push('/backoffice/client-order');
+    }
 
     goHomePage = () => {
         console.log("go products Page");
@@ -105,7 +110,7 @@ class UpperBar extends React.Component {
 
     goContactUsPage = () => {
         console.log("go contact Page");
-        this.props.history.push('/contactUs');
+        this.props.history.push('/contact-us');
     }
 
     goFAQ = () => {
@@ -185,6 +190,7 @@ class UpperBar extends React.Component {
                                                     <MenuItem onClick={this.handleProducts}>Editar Productos</MenuItem>
                                                     <MenuItem onClick={this.handleClients}>Clientes</MenuItem>
                                                     <MenuItem onClick={this.handleProviders}>Proveedores</MenuItem>
+                                                    <MenuItem onClick={this.handleClientOrder}>Generar orden de compra</MenuItem>
                                                 </div>)
                                             }
                                         </div>)

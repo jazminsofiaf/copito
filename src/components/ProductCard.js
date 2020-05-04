@@ -5,18 +5,20 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import withStyles from "@material-ui/core/styles/withStyles";
-import GridList from "@material-ui/core/GridList";
-import GridListTile from "@material-ui/core/GridListTile";
-import GridListTileBar from "@material-ui/core/GridListTileBar";
+
 import authToken from "../providers/authToken";
 import ProductModal from "./ProductModal";
 import PlusOneIcon from '@material-ui/icons/PlusOne';
-import {Divider} from "@material-ui/core";
+
 import Tooltip from "@material-ui/core/Tooltip";
 import Fab from "@material-ui/core/Fab";
 import Slide from "@material-ui/core/Slide";
 import Snackbar from "@material-ui/core/Snackbar";
-import MuiAlert from "@material-ui/lab/Alert";
+
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import GridList from "@material-ui/core/GridList";
+import Box from "@material-ui/core/Box";
 
 function TransitionDown(props) {
     return <Slide {...props} direction="down" />;
@@ -48,7 +50,7 @@ class ProductCard extends React.Component {
 
     handleAddToCartClick(isLogged, productId){
         if(isLogged){
-          return this.props.onAddToCart(productId);
+            return this.props.onAddToCart(productId);
         }else{
             return this.newAlert()
         }
@@ -97,27 +99,20 @@ class ProductCard extends React.Component {
                             component="img"
                             src={this.state.mainImage}
                             title="Producto"
-                            height="300"
+                            height="200"
                             onClick={this.openDialog}
                         />
-                        <CardContent>
+                        <CardContent className={classes.cardContent}>
                             <div>
                                 {this.renderModal(product)}
-                                <Typography gutterBottom variant="h5" component="h2">
+                                <Typography gutterBottom variant="subtitle1" component="h2">
                                     {product.name}
                                 </Typography>
-                                <Typography variant="body2" color="textSecondary" component="p">
-                                    {product.description}
-                                </Typography>
                             </div>
-                            <Divider/>
                             {isLogged && (
-                                <GridList cellHeight={56} style={{padding:10}}>
-                                    <GridListTile >
-                                        <GridListTileBar title={product.price + '$'} className={classes.price} />
-                                    </GridListTile>
-                                    <GridListTile />
-                                </GridList>
+                                <Typography gutterBottom variant="subtitle1" component="h2">
+                                    {'$'+ product.price}
+                                </Typography>
                             )}
                         </CardContent>
                     </CardActionArea>
@@ -142,15 +137,21 @@ const styles = theme => ({
         color: theme.palette.getContrastText(theme.palette.secondary.main),
         backgroundColor: theme.palette.secondary.main,
     },
+    cardContent:{
+      padding:0,
+    },
     card: {
-        maxWidth: 300,
+        maxWidth: 260,
         margin: 20,
-        width: 300,
+        width: 260,
     },
     price: {
+        color: theme.palette.getContrastText(theme.palette.secondary.main),
+        textAlign: 'center',
         backgroundColor: theme.palette.secondary.main,
     },
     media: {
+        //width: "auto",// not zoom
         objectFit: 'cover',
     },
 

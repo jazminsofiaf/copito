@@ -2,10 +2,8 @@ import React from "react";
 import clsx from "clsx";
 import { makeStyles} from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -38,6 +36,10 @@ export default function DynamicDrawer(props) {
     };
 
     const handleDrawerClose = () => {
+        if(isDesktop){
+            //si es desktop no se puede cerrar
+            return;
+        }
         setOpen(false);
     };
 
@@ -96,62 +98,57 @@ export default function DynamicDrawer(props) {
         return renderMustLogInMessage();
     }
 
-    const renderDrawer = () => {
-        return (
-            <Drawer
-            className={classes.drawer}
-            variant="persistent"
-            anchor="right"
-            open={open}
-            classes={{
-                paper: classes.drawerPaper
-            }}
-            >
-            <Toolbar  className={classes.drawerHeader}/>
-            <div className={classes.drawerHeader}>
-                <IconButton onClick={handleDrawerClose}>
-                    <ChevronRightIcon />
-                </IconButton>
-                <ShoppingCartIcon/>
-                <Typography component="h4" variant="h5" className={classes.mainTitle}>
-                    Carrito de compras
-                </Typography>
-            </div>
-            <Divider />
-                {
-                    renderDrawerContent()
-                }
-            </Drawer>)
-
-    }
-
     return (
-        <div className={classes.root}>
-            <CssBaseline />
-            <main className={clsx(classes.content, {[classes.contentShift]: open})} >
-                <Toolbar className={classes.shopIconBarContent}>
-                    <Box >
-                        <Box  mr={0} width="100%" bgcolor={theme.palette.secondary.main} style={{borderRadius: '25px 0px 0px 25px'}} >
-                            <IconButton
-                                aria-label="open drawer"
-                                onClick={handleDrawerOpen}
-                                className={clsx(open && classes.hide)}
-                            >
-                                <ChevronLeftIcon />
-                                <ShoppingCartIcon/>
-                            </IconButton>
-                        </Box>
-                    </Box>
-                </Toolbar>
-                <Box mr={3} ml={3}>
-                    {props.children}
-                </Box>
-            </main>
-            {(
-                open && renderDrawer()
-            )}
 
+        <div className={classes.root}>
+            <div style={{flexGrow:1}}>
+                <main className={clsx(classes.content, {[classes.contentShift]: open})} >
+                    {props.children}
+                </main>
+            </div>
+            <div>
+                <Box  mr={0} bgcolor={theme.palette.secondary.main} style={{borderRadius: '25px 0px 0px 25px'}} >
+                    <IconButton
+                        aria-label="open drawer"
+                        onClick={handleDrawerOpen}
+                        className={clsx(open && classes.hide)}
+                    >
+                        <ShoppingCartIcon/>
+                    </IconButton>
+                </Box>
+            </div>
+            {(
+                open &&
+                <Drawer
+                    className={classes.drawer}
+                    variant="persistent"
+                    anchor="right"
+                    open={open}
+                    classes={{
+                        paper: classes.drawerPaper
+                    }}
+                >
+                    <Toolbar  className={classes.drawerHeader}/>
+                    <div className={classes.drawerHeader}>
+                        {!isDesktop &&
+                        (<IconButton onClick={handleDrawerClose} className={classes.icon}>
+                            <ChevronRightIcon />
+                        </IconButton>)
+                        }
+                        <Typography  variant="h6" className={classes.drawerTitle}>
+                            Carrito de compras
+                            <ShoppingCartIcon/>
+                        </Typography>
+
+                    </div>
+                    <Divider />
+                    {
+                        renderDrawerContent()
+                    }
+                </Drawer>
+            )}
         </div>
+
     );
 }
 
@@ -160,7 +157,8 @@ const drawerWidth = '25%';
 const drawerWidthMobile = '100vw'
 const useStyles = makeStyles(theme => ({
     root: {
-        display: "flex"
+        display: "flex",
+        width:'100vw',
     },
     shopIconBarContent:{
         display: 'flex',
@@ -169,8 +167,8 @@ const useStyles = makeStyles(theme => ({
         marginRight: 0,
         paddingRight: 0,
     },
-    title: {
-        flexGrow: 1
+    icon: {
+        color:'white',
     },
     hide: {
         display: "none"
@@ -198,25 +196,21 @@ const useStyles = makeStyles(theme => ({
         ...theme.mixins.toolbar,
         justifyContent: "flex-start"
     },
+    drawerTitle: {
+        backgroundColor: theme.palette.secondary.main,
+        flexGrow:1,
+    },
+
     content: {
-        //cuando esta cerrado el drower
-        width: '100vw',
-        transition: theme.transitions.create("margin", {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen
-        }),
+        //cuando esta cerrado el drower (solo en mobile)
         [theme.breakpoints.down("sm")]: {
-            marginRight: 0,
+            marginLeft: '7%',
         }
 
     },
     contentShift: {
         //cuando esta abierto el drower
         marginRight: '25%',
-        transition: theme.transitions.create("margin", {
-            easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen
-        }),
         [theme.breakpoints.down("sm")]: {
             display: 'none',
         }
