@@ -1,6 +1,5 @@
 import React from "react";
 import UpperBar from "../../components/UpperBar";
-import withStyles from "@material-ui/core/styles/withStyles";
 import config from "../../config/config";
 import Toolbar from "@material-ui/core/Toolbar";
 import ZoomInIcon from '@material-ui/icons/ZoomIn';
@@ -15,6 +14,7 @@ import SearchFilter from "../../components/SearchFilter";
 import Paper from "@material-ui/core/Paper";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import IconButton from "@material-ui/core/IconButton";
+import withStyles from "@material-ui/core/styles/withStyles";
 
 //const server_url = config.server_url;
 class Clients extends React.Component{
