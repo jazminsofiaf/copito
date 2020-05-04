@@ -23,7 +23,7 @@ import MuiAlert from '@material-ui/lab/Alert';
 
 
 
-export default function DynamicDrawer(props) {
+export default function ShopCartDrawer(props) {
     const classes = useStyles();
     const theme = useTheme();
     const isLogged =  !(authToken.getToken() === null);

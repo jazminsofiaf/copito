@@ -1,5 +1,5 @@
 import React from 'react';
-import DynamicDrawer from "../components/DynamicDrawer";
+import ShopCartDrawer from "./ShopCartDrawer";
 import withStyles from "@material-ui/core/styles/withStyles";
 import FilterBar from "../components/FilterBar";
 import Box from "@material-ui/core/Box";
@@ -70,7 +70,7 @@ class ShopProducts extends React.Component{
     render() {
         const { classes } = this.props;
         return(
-            <DynamicDrawer products={this.state.products} cart={this.state.cart}>
+            <ShopCartDrawer products={this.state.products} cart={this.state.cart}>
                 <div>
                     <SearchFilter
                                 stateKey="search"
@@ -95,7 +95,7 @@ class ShopProducts extends React.Component{
                                 })}
                     </Box>
                 </div>
-            </DynamicDrawer>
+            </ShopCartDrawer>
         );
     }
 }

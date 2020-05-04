@@ -60,6 +60,38 @@ class ClientOrder extends React.Component{
 
     }
 
+    renderShopProducts(){
+        const { classes } = this.props;
+        if(this.state.selectedClient !== undefined){
+            return (
+                <div>
+                    <Box className={classes.clientContainer} >
+                    <Box m={3} className={classes.clientSelected} >
+                        <Paper elevation={3}>
+                            <ListItem alignItems='center' >
+                                <ListItemAvatar>
+                                    <Avatar className={classes.avatar}/>
+                                </ListItemAvatar>
+                                <ListItemText
+                                    primary={this.state.selectedClient.name + ' '+ this.state.selectedClient.lastName}
+                                    secondary={
+                                        <React.Fragment>
+                                            {this.state.selectedClient.businessName}
+                                        </React.Fragment>
+                                    }
+                                />
+                            </ListItem>
+                        </Paper>
+                    </Box>
+                    </Box>
+                    <ShopProducts/>
+                </div>
+            );
+        }
+
+
+    }
+
 
     render() {
         const { classes } = this.props;
@@ -75,34 +107,19 @@ class ClientOrder extends React.Component{
                 <UpperBar/>
                 <Box className={classes.screenSize}>
                     <Toolbar />
-                    <Box className={classes.container}>
+                    {
+                        (this.state.selectedClient === undefined)  && (<Box className={classes.selectClient}>
+
+                        <Toolbar />
                         <OptionsSelector options={this.state.clients}
                                          filterFunc={inputFilterFunc}
                                          label={"Cliente"}
                                          handleOptionSelected={this.handleClientSelected.bind(this)}
-                                         renderOption={renderClientOption}
-                        ></OptionsSelector>
-                        {(this.state.selectedClient !== undefined) && (
-                            <Box m={3}>
-                            <Paper elevation={3}>
-                            <ListItem alignItems='center' >
-                                <ListItemAvatar>
-                                    <Avatar className={classes.avatar}/>
-                                </ListItemAvatar>
-                                <ListItemText
-                                    primary={this.state.selectedClient.name + ' '+ this.state.selectedClient.lastName}
-                                    secondary={
-                                        <React.Fragment>
-                                            {this.state.selectedClient.businessName}
-                                        </React.Fragment>
-                                    }
-                                />
-                            </ListItem>
-                            </Paper>
-                            </Box>
-                        )}
-                    </Box>
-                    <ShopProducts/>
+                                         renderOption={renderClientOption}>
+                        </OptionsSelector>
+                    </Box>)
+                    }
+                    {this.renderShopProducts()}
                 </Box>
             </div>
         );
@@ -120,10 +137,26 @@ const styles = theme => ({
         width: '100vw',
         height:'100vh',
     },
-    container: {
-        width:'60%',
-        margin: '5%',
+
+    clientContainer:{
+        display:'flex',
+        justifyContent: 'center',
         alignItems: 'center',
+        [theme.breakpoints.up("md")]: {
+            //Tamano del drower
+            marginRight: '25%',
+        },
+    },
+    clientSelected:{
+        width:'50%',
+        [theme.breakpoints.down("sm")]: {
+            width: '80%',
+        }
+    },
+    selectClient: {
+        width:'60%',
+        alignItems: 'center',
+        margin:'auto',
         [theme.breakpoints.down("sm")]: {
             width: '90%',
         }
