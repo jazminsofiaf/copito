@@ -7,10 +7,6 @@ import ShopProducts from "../components/ShopProducts";
 
 
 class Products extends React.Component{
-    constructor(props){
-        super(props);
-    }
-
 
     render() {
         const { classes } = this.props;

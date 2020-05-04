@@ -16,7 +16,7 @@ import Paper from "@material-ui/core/Paper";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import IconButton from "@material-ui/core/IconButton";
 
-const server_url = config.server_url;
+//const server_url = config.server_url;
 class Clients extends React.Component{
     constructor(props){
         super(props);

@@ -3,20 +3,16 @@ import UpperBar from "../../components/UpperBar";
 import withStyles from "@material-ui/core/styles/withStyles";
 import config from "../../config/config";
 import Toolbar from "@material-ui/core/Toolbar";
-import {Box, Divider} from "@material-ui/core";
+import {Box} from "@material-ui/core";
 import OptionsSelector from "../../components/OptionsSelector";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import ListItemText from "@material-ui/core/ListItemText";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import IconButton from "@material-ui/core/IconButton";
-import ZoomInIcon from "@material-ui/icons/ZoomIn";
-import List from "@material-ui/core/List";
 import Paper from "@material-ui/core/Paper";
 import ShopProducts from "../../components/ShopProducts";
 
-const server_url = config.server_url;
+//const server_url = config.server_url;
 
 
 class ClientOrder extends React.Component{

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+
 var authToken = require('../providers/authToken');
 
 export default function withAdmin(ComponentToProtect) {

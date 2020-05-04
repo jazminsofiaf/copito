@@ -8,9 +8,7 @@ import PetsIcon from "@material-ui/icons/Pets";
 import Toolbar from "@material-ui/core/Toolbar";
 
 class Home extends React.Component{
-    constructor(props){
-        super(props);
-    }
+
     render() {
         const { classes } = this.props;
         return (

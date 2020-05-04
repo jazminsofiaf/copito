@@ -3,7 +3,6 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import UpperBar from "../components/UpperBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
 
 class ContactUs extends React.Component{
 

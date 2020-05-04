@@ -11,10 +11,11 @@ import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Hidden from "@material-ui/core/Hidden";
-import authToken from "../providers/authToken";
 import withStyles from "@material-ui/core/styles/withStyles";
 import {withRouter} from 'react-router-dom';
 import HomeIcon from '@material-ui/icons/Home';
+
+var authToken = require('../providers/authToken');
 
 function HideOnScroll(props) {
     const { children, window } = props;

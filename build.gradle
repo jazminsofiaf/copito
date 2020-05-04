@@ -17,6 +17,11 @@ task bundle(type: NpmTask, dependsOn: npmInstall) {
     args = ['run', 'build']
 }
 
+//to deploy heroku
+task stage(type: NpmTask, dependsOn: npmInstall) {
+    args = ['start', 'build']
+}
+
 //when Gradle tries to run assemble task it will first run the custom task bundle 
 assemble.dependsOn(bundle)
 

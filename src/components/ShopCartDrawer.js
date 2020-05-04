@@ -18,8 +18,9 @@ import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
-import authToken from "../providers/authToken";
 import MuiAlert from '@material-ui/lab/Alert';
+
+var authToken = require('../providers/authToken');
 
 
 

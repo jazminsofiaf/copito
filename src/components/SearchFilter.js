@@ -13,9 +13,6 @@ const defaultProps = {
 
 class SearchFilter extends React.Component{
 
-    constructor(props){
-        super(props);
-    }
 
     render(){
         const { classes, onTextChange, search, stateKey } = this.props;

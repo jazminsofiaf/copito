@@ -13,10 +13,11 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import withStyles from "@material-ui/core/styles/withStyles";
 import config from '../config/config';
-import authToken from '../providers/authToken';
 import PetsIcon from '@material-ui/icons/Pets';
 
-const server_url = config.server_url;
+var authToken = require('../providers/authToken');
+
+//const server_url = config.server_url;
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
@@ -31,9 +32,7 @@ function Copyright() {
 }
 
 class SignInSide extends React.Component{
-    constructor(props){
-        super(props);
-    }
+
 
 
 

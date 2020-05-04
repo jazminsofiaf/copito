@@ -5,20 +5,15 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import withStyles from "@material-ui/core/styles/withStyles";
-
-import authToken from "../providers/authToken";
 import ProductModal from "./ProductModal";
 import PlusOneIcon from '@material-ui/icons/PlusOne';
-
 import Tooltip from "@material-ui/core/Tooltip";
 import Fab from "@material-ui/core/Fab";
 import Slide from "@material-ui/core/Slide";
 import Snackbar from "@material-ui/core/Snackbar";
 
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import GridList from "@material-ui/core/GridList";
-import Box from "@material-ui/core/Box";
+var authToken = require('../providers/authToken');
+
 
 function TransitionDown(props) {
     return <Slide {...props} direction="down" />;
@@ -89,7 +84,7 @@ class ProductCard extends React.Component {
                         open={this.state.openAlert}
                         onClose={() => this.handleCloseAlert(this)}
                         TransitionComponent={TransitionDown}
-                        message={"Hola, inicia sesion para agregar un producto al carrito"+'\u{1f60a}'}
+                        message={'Hola, inicia sesion para agregar un producto al carrito \u{1f60a}'}
                     />
                 </div>
                 <Card className={classes.card} >
