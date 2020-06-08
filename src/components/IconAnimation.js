@@ -2,21 +2,15 @@ import React from 'react';
 import logo from './logo.svg';
 import './IconAnimation.css';
 
-class Home extends React.Component{
+class IconAnimation extends React.Component{
     constructor(props){
         super(props);
     }
     render() {
-        const { classes } = this.props;
         return (
-            <div className="App">
-                <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <h1>Florida Productos Veterinarios</h1>
-                </header>
-            </div>
+            <img src={logo} height={this.props.height} width={this.props.width} className="App-logo" alt="logo" />
         );
     }
 }
 
-export default Home;
+export default IconAnimation;
