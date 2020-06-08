@@ -77,7 +77,7 @@ const validationSchema = Yup.object().shape({
         .required(requierdMessage),
     business_name: Yup.string()
         .max(40, maxCharsMessage(40)),
-    id_number: Yup.string().matches(/^[0-9]*$/, "Solo numeros")
+    id_number: Yup.string().matches(/^[0-9]*$/, numberMessageValidation)
         .max(15, maxCharsMessage(15))
         .required(requierdMessage),
     phone: Yup.string()
@@ -101,7 +101,7 @@ const validationSchema = Yup.object().shape({
             .max(40, maxCharsMessage(40))
             .required(requierdMessage),
         street_number: Yup.string()
-            .matches(/^[0-9]*$/, "Solo numeros")
+            .matches(/^[0-9]*$/, numberMessageValidation)
             .max(8, maxCharsMessage(8))
             .required(numberMessageValidation),
         postal_code: Yup.string()
@@ -115,7 +115,7 @@ const validationSchema = Yup.object().shape({
 
 class SignUp extends React.Component {
 
-    handleSingIn = (event) => {
+    handleSignIn = (event) => {
         this.props.history.push('/login');
     }
 
@@ -464,7 +464,7 @@ class SignUp extends React.Component {
                                 </Button>
                                 <Grid container>
                                     <Grid item xs={12}>
-                                        <Link variant="body2" onClick={this.handleSingIn}>
+                                        <Link variant="body2" onClick={this.handleSignIn}>
                                             Ya tienes una cuenta? Inicia sesion
                                         </Link>
                                     </Grid>
