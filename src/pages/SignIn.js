@@ -12,7 +12,6 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import withStyles from "@material-ui/core/styles/withStyles";
-import config from '../config/config';
 import PetsIcon from '@material-ui/icons/Pets';
 
 var authToken = require('../providers/authToken');
@@ -31,10 +30,7 @@ function Copyright() {
     );
 }
 
-class SignInSide extends React.Component{
-
-
-
+class SignIn extends React.Component{
 
     handleInputChange = (event) => {
         const { value, name } = event.target;
@@ -43,8 +39,8 @@ class SignInSide extends React.Component{
         });
     }
 
-    handleSingUp = (event) => {
-        this.props.history.push('/sing-up');
+    handleSignUp = (event) => {
+        this.props.history.push('/sign-up');
     }
 
     handleForgotPassword = (event) => {
@@ -64,33 +60,34 @@ class SignInSide extends React.Component{
             authToken.setToken("otro");
             this.props.history.push('/home');
         }
-        {/*
-        let user = {
-            "email": this.state.email,
-            "password": this.state.password,
-        };
-        fetch(server_url + '/user/authenticate', {
-            method: 'post',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(user),
-        }).then(res => res.json())
-            .then(res => {
-                console.log(res);
-                if (res.result === 'OK') {
-                    console.log(res.token);
-                    //authToken.setToken(res.token);
-                    this.props.history.push('/');
-                } else {
-                    const error = new Error(res.error);
-                    throw error;
-                }
-            })
-            .catch(err => {
-                console.error(err);
-            });
-            */}
+        // {
+        // let user = {
+        //     "email": this.state.email,
+        //     "password": this.state.password,
+        // };
+        // fetch(server_url + '/user/authenticate', {
+        //     method: 'post',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify(user),
+        // }).then(res => res.json())
+        //     .then(res => {
+        //         console.log(res);
+        //         if (res.result === 'OK') {
+        //             console.log(res.token);
+        //             //authToken.setToken(res.token);
+        //             this.props.history.push('/');
+        //         } else {
+        //             const error = new Error(res.error);
+        //             throw error;
+        //         }
+        //     })
+        //     .catch(err => {
+        //         console.error(err);
+        //     });
+
+        // }
     }
 
 
@@ -159,15 +156,15 @@ class SignInSide extends React.Component{
                             >
                                Iniciar sesion
                             </Button>
-                            <Grid container>
+                            <Grid container spacing={1}>
                                 <Grid item xs>
                                     <Link  variant="body2" onClick={this.handleForgotPassword}>
                                         Olvide mi contraseña
                                     </Link>
                                 </Grid>
-                                <Grid item>
-                                    <Link variant="body2" onClick={this.handleSingUp}>
-                                        {"No tienenes una cuenta? Registrate"}
+                                <Grid item xs>
+                                    <Link variant="body2" onClick={this.handleSignUp}>
+                                        {"¿No tenes cuenta? Solicitala aca!"}
                                     </Link>
                                 </Grid>
                             </Grid>
@@ -230,4 +227,4 @@ const styles = theme => ({
 });
 
 
-export default withStyles(styles)(SignInSide);
+export default withStyles(styles)(SignIn);

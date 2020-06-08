@@ -77,4 +77,4 @@ const styles = theme => ({
 });
 
 
-export default withStyles(styles)(Home);
+export default  withStyles(styles)(Home);
