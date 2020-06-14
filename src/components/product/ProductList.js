@@ -3,18 +3,26 @@ import ProductRowDetails from './ProductRowDetails'
 
 function filterProducts(props) {
     const rows = [];
+    const maxRows = 15;
 
-    props.products.forEach((product) => {
-        if (product.name.toLowerCase().indexOf(props.filterText.toLowerCase()) === -1) {
-          return;
-        }
-        rows.push(
-          <ProductRowDetails
-            product={product}
-            key={product.name}
-          />
-        );
+    var count = 0;
+    if (props.products && props.products.length > 0) {
+      props.products.forEach((product) => {
+          if (product.name.toLowerCase().indexOf(props.filterText.toLowerCase()) === -1) {
+            return;
+          }
+          if (count < maxRows) {
+            rows.push(
+              <ProductRowDetails
+                product={product}
+                key={product.product_id}
+                onClick={props.onClick}
+              />
+            );
+            count++;
+          }
       });   
+    }
       return rows;
 }
 

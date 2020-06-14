@@ -110,8 +110,8 @@ class UpperBar extends React.Component {
     }
 
     goVademecumPage = () => {
-        console.log("go vademecum Page");
-        this.props.history.push('/vademecum');
+        console.log("go user-order Page");
+        this.props.history.push('/user-order');
     }
 
     goContactUsPage = () => {
@@ -157,7 +157,7 @@ class UpperBar extends React.Component {
                                 <Button variant="text" className={classes.menuBarItem}
                                             onClick={this.goProductsPage}>Productos</Button>
                                 <Button variant="text" className={classes.menuBarItem}
-                                            onClick={this.goVademecumPage}>Vademecum</Button>
+                                            onClick={this.goVademecumPage}>Orden</Button>
                                 <Button variant="text" className={classes.menuBarItem}
                                         onClick={this.goContactUsPage}>Contactenos</Button>
                                 <Hidden only={['sm', 'xs']}>

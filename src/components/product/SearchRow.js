@@ -8,7 +8,7 @@ function SearchRow(props) {
         <TextField fullWidth 
                 value={props.filterText} 
                 id="outlined-search" 
-                label="Buscar" 
+                label={props.label}
                 type="search" 
                 variant="outlined" 
                 onChange={(e) => props.update(e.target.value)}/>

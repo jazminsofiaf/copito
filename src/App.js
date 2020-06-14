@@ -19,7 +19,7 @@ import ClientOrder from "./pages/Backoffice/ClientOrder";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import withAdmin from "./providers/withAdmin";
 import Presentation from "./pages/Presentation"
-import ProductPage from "./components/product/ProductPage"
+import UserOrderPage from './components/order/UserOrderPage';
 
 
 const theme = createMuiTheme({
@@ -62,7 +62,7 @@ export default class App extends Component {
                                 <Route exact path="/login" component={SignIn}/>
                                 <Route exact path="/sign-up" component={SignUp}/>
                                 <Route exact path="/products" component={Products}/>
-                                <Route exact path="/vademecum" component={ProductPage}/>
+                                <Route exact path="/user-order" component={UserOrderPage}/>
                                 <Route exact path="/contact-us" component={ContactUs}/>
                                 <Route exact path="/backoffice/clients" component={withAdmin(Clients)}/>
                                 <Route exact path="/backoffice/products" component={withAdmin(AdminProducts)}/>
