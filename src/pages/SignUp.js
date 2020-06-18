@@ -11,7 +11,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import withStyles from "@material-ui/core/styles/withStyles";
-import {Field, FieldArray, Form, Formik} from "formik";
+import { Field, FieldArray, Form, Formik } from "formik";
 import * as Yup from "yup";
 import axios from 'axios';
 import IconAnimation from "../components/IconAnimation";
@@ -120,12 +120,12 @@ class SignUp extends React.Component {
     }
 
     render() {
-        const {classes} = this.props;
+        const { classes } = this.props;
 
         async function onSubmit(values) {
             alert(JSON.stringify(values, null, 2));
             const options = {
-                headers: {'Content-Type': 'application/json'}
+                headers: { 'Content-Type': 'application/json' }
             };
             const profile = {
                 new_profile: values
@@ -141,19 +141,19 @@ class SignUp extends React.Component {
 
         return (
             <Container component="main" maxWidth='sm'>
-                <CssBaseline/>
+                <CssBaseline />
                 <div className={classes.paper}>
                     <Avatar className={classes.avatar}>
-                        <IconAnimation height={50} width={50}/>
+                        <IconAnimation height={50} width={50} />
                     </Avatar>
                     <Typography component="h1" variant="h5">
                         Solicitar apertura de cuenta
                     </Typography>
                     <Formik initialValues={initialValues}
-                            validationSchema={validationSchema}
-                            onSubmit={onSubmit}
+                        validationSchema={validationSchema}
+                        onSubmit={onSubmit}
                     >
-                        {({values, isSubmitting}) => (
+                        {({ values, isSubmitting }) => (
                             <Form>
                                 <Grid container spacing={2}>
                                     <Grid item xs={12}>
@@ -163,7 +163,7 @@ class SignUp extends React.Component {
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <Field name={"first_name"}>
-                                            {({field, meta}) =>
+                                            {({ field, meta }) =>
                                                 <TextField
                                                     {...field}
                                                     variant="outlined"
@@ -180,7 +180,7 @@ class SignUp extends React.Component {
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <Field name={"surname"}>
-                                            {({field, meta}) =>
+                                            {({ field, meta }) =>
                                                 <TextField
                                                     {...field}
                                                     variant="outlined"
@@ -197,13 +197,13 @@ class SignUp extends React.Component {
                                     </Grid>
                                     <Grid item xs={12} sm={8}>
                                         <Field name={"business_name"}>
-                                            {({field, meta}) =>
+                                            {({ field, meta }) =>
                                                 <TextField
                                                     {...field}
                                                     variant="outlined"
                                                     fullWidth
                                                     id="business_name"
-                                                    label="Razon social"
+                                                    label="Razon social / Alias"
                                                     type="text"
                                                     error={(meta.touched && meta.error !== undefined)}
                                                     helperText={((meta.touched) && meta.error)}
@@ -213,7 +213,7 @@ class SignUp extends React.Component {
                                     </Grid>
                                     <Grid item xs={12} sm={4}>
                                         <Field name={"id_number"}>
-                                            {({field, meta}) =>
+                                            {({ field, meta }) =>
                                                 <TextField
                                                     {...field}
                                                     variant="outlined"
@@ -230,7 +230,7 @@ class SignUp extends React.Component {
                                     </Grid>
                                     <Grid item xs={12} sm={8}>
                                         <Field name={"email"}>
-                                            {({field, meta}) =>
+                                            {({ field, meta }) =>
                                                 <TextField
                                                     {...field}
                                                     variant="outlined"
@@ -248,7 +248,7 @@ class SignUp extends React.Component {
                                     </Grid>
                                     <Grid item xs={12} sm={4}>
                                         <Field name={"phone"}>
-                                            {({field, meta}) =>
+                                            {({ field, meta }) =>
                                                 <TextField
                                                     {...field}
                                                     variant="outlined"
@@ -272,14 +272,14 @@ class SignUp extends React.Component {
                                     </Grid>
                                     <Grid item xs={12}>
                                         <FieldArray name={"addresses"}>
-                                            {({push, remove}) => (
+                                            {({ push, remove }) => (
                                                 <React.Fragment>
                                                     {values.addresses && values.addresses.length > 0 && values.addresses.map((address, index) =>
                                                         <div key={`addresses[${index}]`}>
                                                             <Grid container spacing={1}>
                                                                 <Grid item xs={12} sm={6}>
                                                                     <Field name={`addresses[${index}].country`}>
-                                                                        {({field, meta}) => //Child function that acts as render prop
+                                                                        {({ field, meta }) => //Child function that acts as render prop
                                                                             <TextField
                                                                                 {...field}
                                                                                 variant="outlined"
@@ -297,7 +297,7 @@ class SignUp extends React.Component {
                                                                 </Grid>
                                                                 <Grid item xs={12} sm={6}>
                                                                     <Field name={`addresses[${index}].province`}>
-                                                                        {({field, meta}) =>
+                                                                        {({ field, meta }) =>
                                                                             <TextField
                                                                                 {...field}
                                                                                 variant="outlined"
@@ -314,7 +314,7 @@ class SignUp extends React.Component {
                                                                 </Grid>
                                                                 <Grid item xs={12} sm={6}>
                                                                     <Field name={`addresses[${index}].city`}>
-                                                                        {({field, meta}) =>
+                                                                        {({ field, meta }) =>
                                                                             <TextField
                                                                                 {...field}
                                                                                 variant="outlined"
@@ -331,7 +331,7 @@ class SignUp extends React.Component {
                                                                 </Grid>
                                                                 <Grid item xs={12} sm={6}>
                                                                     <Field name={`addresses[${index}].locality`}>
-                                                                        {({field, meta}) =>
+                                                                        {({ field, meta }) =>
                                                                             <TextField
                                                                                 {...field}
                                                                                 variant="outlined"
@@ -349,7 +349,7 @@ class SignUp extends React.Component {
 
                                                                 <Grid item xs={12} sm={8}>
                                                                     <Field name={`addresses[${index}].street_name`}>
-                                                                        {({field, meta}) =>
+                                                                        {({ field, meta }) =>
                                                                             <TextField
                                                                                 {...field}
                                                                                 variant="outlined"
@@ -366,8 +366,8 @@ class SignUp extends React.Component {
                                                                 </Grid>
                                                                 <Grid item xs={4}>
                                                                     <Field name={`addresses[${index}].street_number`}
-                                                                           type={"number"}>
-                                                                        {({field, meta}) =>
+                                                                        type={"number"}>
+                                                                        {({ field, meta }) =>
                                                                             <TextField
                                                                                 {...field}
                                                                                 variant="outlined"
@@ -383,8 +383,8 @@ class SignUp extends React.Component {
                                                                 </Grid>
                                                                 <Grid item xs={4}>
                                                                     <Field name={`addresses[${index}].postal_code`}
-                                                                           type={"text"}>
-                                                                        {({field, meta}) =>
+                                                                        type={"text"}>
+                                                                        {({ field, meta }) =>
                                                                             <TextField
                                                                                 {...field}
                                                                                 variant="outlined"
@@ -400,8 +400,8 @@ class SignUp extends React.Component {
                                                                 </Grid>
                                                                 <Grid item xs={4}>
                                                                     <Field name={`addresses[${index}].floor_number`}
-                                                                           type={"text"}>
-                                                                        {({field, meta}) =>
+                                                                        type={"text"}>
+                                                                        {({ field, meta }) =>
                                                                             <TextField
                                                                                 {...field}
                                                                                 variant="outlined"
@@ -420,14 +420,14 @@ class SignUp extends React.Component {
                                                                     type={"button"}
                                                                     key={`button[${index}]`}
                                                                     onClick={() => remove(index)}
-                                                                    style={{marginTop: '5px'}}
+                                                                    style={{ marginTop: '5px' }}
                                                                 >Quitar
                                                                 </button>
                                                             </Grid>
                                                             <div hidden={`${index}` == (values.addresses.length - 1)}>
-                                                                <hr style={{margin: '5px 0px 5px 0px'}}/>
-                                                                <Typography style={{marginBottom: '5px'}} variant="subtitle1" align="left" className={classes.mainTitle}>
-                                                                    Direccion alternativa {index+1}
+                                                                <hr style={{ margin: '5px 0px 5px 0px' }} />
+                                                                <Typography style={{ marginBottom: '5px' }} variant="subtitle1" align="left" className={classes.mainTitle}>
+                                                                    Direccion alternativa {index + 1}
                                                                 </Typography>
                                                             </div>
                                                         </div>
@@ -438,7 +438,7 @@ class SignUp extends React.Component {
                                                         variant="contained"
                                                         color="default"
                                                         onClick={() => push(newAddress)}
-                                                        style={{marginTop: '10px'}}
+                                                        style={{ marginTop: '10px' }}
                                                     >
                                                         Agregar direccion
                                                     </Button>
@@ -449,7 +449,7 @@ class SignUp extends React.Component {
 
                                     <Grid item xs={12}>
                                         <FormControlLabel
-                                            control={<Checkbox value="allowExtraEmails" color="primary"/>}
+                                            control={<Checkbox value="allowExtraEmails" color="primary" />}
                                             label="Si, deseo recibir ofertas por email."
                                         />
                                     </Grid>
@@ -474,7 +474,7 @@ class SignUp extends React.Component {
                     </Formik>
                 </div>
                 <Box mt={5}>
-                    <Copyright/>
+                    <Copyright />
                 </Box>
             </Container>
         );

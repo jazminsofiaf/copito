@@ -1,23 +1,22 @@
 import React, { useState } from 'react';
-import ProductList from './ProductList';
+import SupplierProducts from './SupplierProducts';
 import SearchRow from '../shared/SearchRow';
-import './ProductRowDetails.css';
 import Paper from '@material-ui/core/Paper';
 
 
-function ProductFilter(props) {
+function SupplierProductFilter(props) {
     const [filterText, setFilterText] = useState('');
-    const products = props.products;
+    const products = props.items;
 
     return (
         <>
-            <Paper className="search-box">
+            <Paper style={{marginBottom:'15px'}}>
                 <SearchRow filterText={filterText} update={setFilterText} label={"Buscar producto"}/>
             </Paper>
-            <ProductList products={products} filterText={filterText} onClick={props.onClick}/>
+            <SupplierProducts items={products} filterText={filterText} onClick={props.onClick}/>
         </>
 
     )
 }
 
-export default ProductFilter;
+export default SupplierProductFilter;

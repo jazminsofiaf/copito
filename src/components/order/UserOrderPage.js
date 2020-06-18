@@ -4,6 +4,7 @@ import ProductFilter from '../product/ProductFilter';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import UpperBar from "../UpperBar";
 import axios from 'axios';
@@ -18,8 +19,7 @@ function getUserSelectionBox(props){
         <Autocomplete
                     id="users-box"
                     options={props.profiles}
-                    getOptionLabel={(option) => option.name_summary}
-                    style={{marginTop: "6em"}}
+                    getOptionLabel={(option) => option.name_summary + " - " + option.contact_summary}
                     disabled={props.cartHasItems}
                     onChange={(event, newValue) => {
                         props.setUser(newValue);
@@ -58,6 +58,7 @@ async function getProductsForUser(props) {
         await axios.get(priceListEndpoint, options)
         .then(function (response) {
             props.setProducts(response.data.price_list);
+            alert(JSON.stringify(response.data, 2, null));
           })
           .catch(function (error) {
             console.log(error);
@@ -74,9 +75,9 @@ async function loadProfiles(props) {
         headers: {'Content-Type': 'application/json'}
     };
     try {
-        return await axios.get("/profile/all/summary", options)
+        return await axios.get("/profiles/summary", options)
         .then(function (response) {
-            props.setProfiles(response.data.profiles_summary);
+            props.setProfiles(response.data.customers_summary);
           })
           .catch(function (error) {
             console.log(error);
@@ -87,17 +88,18 @@ async function loadProfiles(props) {
 }
 
 function UserOrderPage(){
-    const [profiles, setProfiles] = useState([]);
+    const [profiles, setProfiles] = useState([{'id':123, 'name_summary': "Vet genio"}]);
     useEffect(() => {loadProfiles({setProfiles})},[])
 
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState();
     const [products, setProducts] = useState([{product_id: 123, name : "prod1" , subDescription: "subdesc1"},
     {product_id: 888, name : "prod3" , subDescription: "subdesc1"},
     {product_id: 1234, name : "prod2" , subDescription: "subdesc3"}]);
     useEffect(() => {
-        const userId = user.id;
-        if (userId) {
+        if (user && user.id) {
+            const userId = user.id;
             getProductsForUser({userId, setProducts});
+            alert(JSON.stringify(products, 2, null));
         }
     }, [user]);
 
@@ -130,12 +132,11 @@ function UserOrderPage(){
 
     return(
         <>
-        <div>
-            <UpperBar/>
-        </div>
-        <Container maxWidth="lg">
+        <UpperBar/>
+        <Container maxWidth="lg" style={{marginTop: "6em"}}>
+            <Typography variant="h3">Pedido de cliente</Typography>
             <Grid container spacing={1}> 
-                <Grid item container style={{backgroundColor:"#748386", borderRadius: '0px 0px 20px 20px', padding: '10px'}}>
+                <Grid item container style={{backgroundColor:"#FDF0D5", borderRadius: '20px 20px 20px 20px', padding: '10px'}}>
                     <Grid item xs={12} sm={2}></Grid>
                     <Grid item xs={12} sm={8}>
                         <Paper>
@@ -144,10 +145,10 @@ function UserOrderPage(){
                     </Grid>
                 </Grid>
                 <Grid item xs={12} sm={8}>
-                    <ProductFilter products={products} onClick={addItemToCart}/>
+                    {user ? <ProductFilter products={products} onClick={addItemToCart}/> : null}
                 </Grid>
                 <Grid item xs={12} sm={4}>
-                    <CartDrawer elements={cartItems} onClick={{createOrder, removeItem}}/>
+                    {user ? <CartDrawer elements={cartItems} onClick={{createOrder, removeItem}}/> : null}
                 </Grid>
             </Grid>
         </Container>
