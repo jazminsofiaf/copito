@@ -13,8 +13,7 @@ function productHeader(props) {
                 {props.product.presentation ?  props.product.name + " - " + props.product.presentation : props.product.name}
             </div>
             <div className="product-subtitle">
-                {/* {props.product.subDescription} */}
-                description - categoria
+                {props.product.category ?  props.product.description + " - " + props.product.category : props.product.description}
             </div>
         </>
     )
@@ -23,12 +22,13 @@ function productHeader(props) {
 
 function productPrice(price) {
     return (
-        <div className="product-price">{price}</div>
+        <div className="product-price">$ {price}</div>
     )
 }
 
 function getSpecies(species) {
-    const row = [1, 2, 3, 5, 6, 7];
+
+    const row = species ? species : [] ;
     const images = row.map((specie) => (
         <img key={specie} src={bovinos} alt="bovinos"/>
     ))
@@ -52,9 +52,9 @@ function ProductRowDetails(props) {
                 <Grid item xs={12} sm={9} style={{textAlign:"left"}} container >
                         <Grid item xs={12} sm={9}>{productHeader(props)}</Grid>
                         <Grid item xs={12} sm={3}>{productPrice(product.price)}</Grid>
-                        <Grid item xs={12} sm={9}>Marca</Grid>
-                        <Grid item xs={12} sm={3}>Stock: 1u</Grid>
-                        <Grid item xs={6} sm={9}>{getSpecies(null)}</Grid>
+                        <Grid item xs={12} sm={9}>{product.brand}</Grid>
+                        <Grid item xs={12} sm={3}>{product.stock}</Grid>
+                        <Grid item xs={6} sm={9}>{getSpecies(product.species)}</Grid>
                         <Grid item xs={6} sm={3}>{AmountField({product, addToCart})}</Grid>
                 </Grid>
             </Grid>

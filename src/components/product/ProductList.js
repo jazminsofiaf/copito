@@ -15,7 +15,7 @@ function filterProducts(props) {
             rows.push(
               <ProductRowDetails
                 product={product}
-                key={product.product_id}
+                key={product.id}
                 onClick={props.onClick}
               />
             );

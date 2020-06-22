@@ -17,7 +17,7 @@ import axios from 'axios';
 import IconAnimation from "../components/IconAnimation";
 
 
-const profileFormEndpoint = "/profile";
+const profileFormEndpoint = "/profiles";
 
 function Copyright() {
     return (

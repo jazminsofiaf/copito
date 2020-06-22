@@ -2,6 +2,7 @@
     background: rgb(234, 239, 243);
     margin-bottom: 15px;
     text-align:"left";
+    padding: '0.4em';
   }
 
 .product-title {
@@ -12,18 +13,11 @@
     word-break: break-word;
   }
 
- .product-lab {
+ .product-price {
     color: #3E3B62;
     font-family: Arial;
     font-weight: bold;
     font-size: 1.1em;
     word-break: break-word;
 
-  }
-
-  .product-price {
-    color: rgb(57, 42, 22);
-    font-family: Arial;
-    font-size:1.5em;
-    font-weight: bold;
   }

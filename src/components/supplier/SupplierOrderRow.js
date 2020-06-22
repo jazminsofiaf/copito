@@ -1,7 +1,6 @@
 import React from 'react';
 import SupplierOrderPage from '../supplierOrder/SupplierOrderPage';
-import Grid from '@material-ui/core/Grid'
-import { Paper } from '@material-ui/core';
+import { Paper, Button, Grid, Typography } from '@material-ui/core';
 
 
 
@@ -9,15 +8,14 @@ function SupplierOrderRow(props) {
     const order = props.order;
 
     return (
-        <Paper>
-            <Grid container spacing={1} style={{marginBottom:'10px'}}>
-                <Grid item xs={4}>Nombre: {order.name}</Grid>
-                <Grid item xs={2}>Fecha: {order.emission_date}</Grid>
-                <Grid item xs={2}>Cant. items:{order.items.length}</Grid>
-                <Grid item xs={4}>Total: {order.total_cost}</Grid>
-                <Grid item xs={4}>No. Orden: {order.order_numer}</Grid>
+        <Paper style={{padding: '0.4em', marginBottom:'10px'}}>
+            <Grid container spacing={1} style={{textAlign:'left'}}>
+                <Grid item xs={4}><Typography color='primary'>Nombre: {order.owner_summary}</Typography></Grid>
+                <Grid item xs={4}>No. Orden: {order.number} - Fecha: {order.emission_date}</Grid>
                 <Grid item xs={4}>Estado: {order.status}</Grid>
-                <Grid item xs={4}><button onClick={() => props.openModal(order)}>view</button></Grid>
+                <Grid item xs={4}>Cant. items:{order.products.length}</Grid>
+                <Grid item xs={4}>Importe: {order.total}</Grid>
+                <Grid item xs={4}><Button size="small" variant='outlined' color='secondary' onClick={() => props.openModal(order)}>Detalle</Button></Grid>
             </Grid>
         </Paper>
     )

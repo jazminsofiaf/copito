@@ -121,14 +121,13 @@ class UpperBar extends React.Component {
     }
 
     goToUserOrderPage = () => {
-        console.log("go user-order Page");
-        this.props.history.push('/user-order');
+        console.log("go new-order Page");
+        this.props.history.push('/new-order');
     }
 
-    //TODO
     goToUserOrdersPage = () => {
-        console.log("go user-order Page");
-        this.props.history.push('/user-order');
+        console.log("go users-orders Page");
+        this.props.history.push('/users-orders');
     }
 
     //TODO

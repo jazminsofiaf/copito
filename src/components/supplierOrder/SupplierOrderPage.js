@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CartDrawer from '../cart/CartDrawer';
 import axios from 'axios';
 import Container from '@material-ui/core/Container';
@@ -11,7 +11,40 @@ import Grid from '@material-ui/core/Grid'
 import SupplierProductFilter from './SupplierProductFilter'
 
 
-const orderEnpoint = '/supplier/order';
+async function loadSuppliers(props) {
+    const options = {
+        headers: {'Content-Type': 'application/json'}
+    };
+    try {
+        return await axios.get("/suppliers/summary", options)
+        .then(function (response) {
+            props.setSupplierList(response.data.supplier_list);
+          })
+          .catch(function (error) {
+            console.log(error);
+          })
+    } catch (error) {
+        alert("Error al buscar proveedores");
+    }  
+}
+
+async function getSupplierProducts(props) {
+    // props.setSupplierItems([{"id":"1", "name": "Product1", "cost":123}, {"id":"2", "name": "Product2", "cost":1003}])
+    const options = {
+        headers: {'Content-Type': 'application/json'}
+    };
+    try {
+        await axios.get("/suppliers/"+props.supplierId+"/products", options)
+        .then(function (response) {
+            props.setSupplierItems(response.data.supplier_products);
+          })
+          .catch(function (error) {
+            console.log(error);
+          })
+    } catch (error) {
+        alert("Error, al buscar productos");
+    }  
+}
 
 function supplierSelection(props){
     return (
@@ -31,14 +64,17 @@ function supplierSelection(props){
 async function uploadOrder(props) {
     const options = {
         headers: {'Content-Type': 'application/json'}
-    };            
+    };
+    props.cartItems.forEach((item) => item.name=undefined);               
     const order = {
+        order : {
         owner_id: props.supplier.id,
         products: props.cartItems
+        }
     }
     alert(JSON.stringify(order, null, 2));
     try {
-        await axios.post(orderEnpoint,order, options);
+        await axios.post('/suppliers/new-order',order, options);
         alert("Orden creada con exito.");
     } catch (error) {
         alert("Error, algo fallo al crear la orden.");
@@ -48,9 +84,17 @@ async function uploadOrder(props) {
 
 function SupplierOrderPage(){
     const [cartItems, updateCart] = useState([]);
-    const [suppliers, setSupplierList] = useState([{"id":"123", "name_summary": "Supplier1"}, {"id":"1233", "name_summary": "Supplier2"}, {"id":"1263", "name_summary": "Supplier3"}])
+    const [suppliers, setSupplierList] = useState([])
+    useEffect(() => { loadSuppliers({ setSupplierList }) }, [])
     const [supplier, setSupplier] = useState();
-    const [supplierItems, setSupplierItems] = useState([{"id":"1", "name": "Product1", "cost":123}, {"id":"2", "name": "Product2", "cost":1003}])
+    const [supplierItems, setSupplierItems] = useState([])
+    
+    useEffect(() => {
+        if (supplier && supplier.id) {
+            const supplierId = supplier.id;
+            getSupplierProducts({supplierId, setSupplierItems});
+        }
+    }, [supplier]);
 
     function removeItem(itemToRemove) {
         updateCart(cartItems.filter(item => item.id !== itemToRemove.id));

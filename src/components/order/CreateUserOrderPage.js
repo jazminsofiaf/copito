@@ -33,10 +33,14 @@ function getUserSelectionBox(props){
 async function uploadOrder(props) {
     const options = {
         headers: {'Content-Type': 'application/json'}
-    };            
+    };
+    props.cartItems.forEach((item) => item.name=undefined);   
+    const orderProducts = props.cartItems;      
     const order = {
+        order: {
         owner_id: props.user.id,
-        products: props.cartItems
+        products: orderProducts
+        }
     }
     alert(JSON.stringify(order, null, 2));
     try {
@@ -48,17 +52,13 @@ async function uploadOrder(props) {
 }
 
 async function getProductsForUser(props) {
-    // return [{"id": 123, "name": "productasdfasdfasdfasasffasdfsasdfasfas1", "amount": 2, "price": 100},
-    // {"id": 1234, "name": "product1", "amount": 2, "price": 100}];
     const options = {
         headers: {'Content-Type': 'application/json'}
     };
     try {
-        // await axios.get(priceListEndpoint+"?userId="+props.userId, options)
-        await axios.get(priceListEndpoint, options)
+        await axios.get(priceListEndpoint+"/"+props.userId, options)
         .then(function (response) {
             props.setProducts(response.data.price_list);
-            alert(JSON.stringify(response.data, 2, null));
           })
           .catch(function (error) {
             console.log(error);
@@ -69,8 +69,6 @@ async function getProductsForUser(props) {
 }
 
 async function loadProfiles(props) {
-    // return [{"id": 123, "name": "productasdfasdfasdfasasffasdfsasdfasfas1", "amount": 2, "price": 100},
-    // {"id": 1234, "name": "product1", "amount": 2, "price": 100}];
     const options = {
         headers: {'Content-Type': 'application/json'}
     };
@@ -88,38 +86,37 @@ async function loadProfiles(props) {
 }
 
 function UserOrderPage(){
-    const [profiles, setProfiles] = useState([{'id':123, 'name_summary': "Vet genio"}]);
+    const [profiles, setProfiles] = useState([{'name_summary': "No hay clientes disponibles"}]);
     useEffect(() => {loadProfiles({setProfiles})},[])
 
     const [user, setUser] = useState();
-    const [products, setProducts] = useState([{product_id: 123, name : "prod1" , subDescription: "subdesc1"},
-    {product_id: 888, name : "prod3" , subDescription: "subdesc1"},
-    {product_id: 1234, name : "prod2" , subDescription: "subdesc3"}]);
+    const [products, setProducts] = useState();
     useEffect(() => {
         if (user && user.id) {
             const userId = user.id;
             getProductsForUser({userId, setProducts});
-            alert(JSON.stringify(products, 2, null));
         }
     }, [user]);
 
     const [cartItems, updateCart] = useState([]);
 
     function removeItem(itemToRemove) {
-        updateCart(cartItems.filter(item => item.product_id !== itemToRemove.product_id));
+        updateCart(cartItems.filter(item => item.id !== itemToRemove.id));
        };
 
     function addItemToCart(props) {
         var added = false;
         cartItems.forEach((item) => {
-            if (item.product_id == props.item.product_id) {
+            if (item.id == props.item.id) {
                 item.amount = parseInt(item.amount) + parseInt(props.amount);
                 added = true;
             }   
-          });   
-        updateCart([].concat(cartItems));
+          });
+        console.log(JSON.stringify(props, 2, null));
         if (!added) {
-            updateCart(cartItems.concat([{"product_id": props.item.product_id, "name": props.item.name, "amount": props.amount, "price": 100}]));
+            updateCart(cartItems.concat([{"id": props.item.id, "name": props.item.name, "amount": props.amount, "price": props.item.price}]));
+        } else {
+            updateCart([].concat(cartItems));
         }
     }
 

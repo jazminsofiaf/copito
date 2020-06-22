@@ -19,7 +19,8 @@ import ClientOrder from "./pages/Backoffice/ClientOrder";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import withAdmin from "./providers/withAdmin";
 import Presentation from "./pages/Presentation"
-import UserOrderPage from './components/order/UserOrderPage';
+import CreateUserOrderPage from './components/order/CreateUserOrderPage';
+import UserOrdersPage from './components/order/UserOrdersPage';
 import SupplierOrderPage from './components/supplierOrder/SupplierOrderPage';
 import SupplierOrders from './components/supplier/SupplierOrders';
 import NewCustomer from './pages/NewCustomer'
@@ -83,7 +84,8 @@ export default class App extends Component {
                                 <Route exact path="/new-customer" component={NewCustomer} />
                                 <Route exact path="/customers" component={CustomerPage} />
                                 <Route exact path="/products" component={Products} />
-                                <Route exact path="/user-order" component={UserOrderPage} />
+                                <Route exact path="/new-order" component={CreateUserOrderPage} />
+                                <Route exact path="/users-orders" component={UserOrdersPage} />
                                 <Route exact path="/supplier-order" component={SupplierOrderPage} />
                                 <Route exact path="/supplier-orders" component={SupplierOrders} />
                                 <Route exact path="/contact-us" component={ContactUs} />

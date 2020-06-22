@@ -8,6 +8,7 @@ import {
     KeyboardDatePicker
 } from "@material-ui/pickers";
 import { Field } from "formik";
+import { Typography } from '@material-ui/core';
 
 
 
@@ -27,10 +28,10 @@ function ReceptionRow(props) {
     return (
         <Paper style={{ margin: '1px 1px 10px 1px' }}>
             <Grid container spacing={1}>
-                <Grid item xs={6} style={{ paddingTop: '10px' }}>{item.name}</Grid>
+                <Grid item xs={5} style={{ paddingTop: '10px' }}>{item.name}</Grid>
                 <Grid item xs={1} style={{ paddingTop: '10px' }}>${item.original_price}</Grid>
                 <Grid item xs={1}>
-                    <Field name={`items[${index}].amount`}>
+                    <Field name={`received_products[${index}].amount`}>
                         {({ field, meta }) =>
                             <TextField
                                 {...field}
@@ -49,7 +50,7 @@ function ReceptionRow(props) {
                 </Grid>
                 <Grid item xs={3}>
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <Field name={`items[${index}].expiration_date`}>
+                        <Field name={`received_products[${index}].expiration_date`}>
                             {({ field, meta }) =>
                                 <KeyboardDatePicker
                                     {...field}
@@ -69,7 +70,7 @@ function ReceptionRow(props) {
                     </MuiPickersUtilsProvider>
                 </Grid>
                 <Grid item xs={1}>
-                    <Field name={`items[${index}].price`}>
+                    <Field name={`received_products[${index}].price`}>
                         {({ field, meta }) =>
                             <TextField
                                 {...field}
@@ -85,6 +86,9 @@ function ReceptionRow(props) {
                             />
                         }
                     </Field>
+                </Grid>
+                <Grid item xs={1}>
+                    <Typography style={{ paddingTop: '10px' }}>{item.price * item.amount}</Typography>
                 </Grid>
             </Grid>
         </Paper>
