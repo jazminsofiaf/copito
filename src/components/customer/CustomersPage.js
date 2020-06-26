@@ -5,6 +5,8 @@ import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import UpperBar from "../UpperBar";
 import axios from 'axios';
+import CommonModal from '../shared/CommonModal'
+import PaymentForm from '../payment/PaymentForm'
 
 async function loadCustomers(props) {
     const options = {
@@ -13,6 +15,7 @@ async function loadCustomers(props) {
     try {
         return await axios.get("/profiles/summary", options)
         .then(function (response) {
+            console.log(response.data.customers_summary)
             props.setCustomers(response.data.customers_summary);
           })
           .catch(function (error) {
@@ -27,16 +30,31 @@ async function loadCustomers(props) {
 function CustomerPage(props) {
     const { classes } = props;
     const [customers, setCustomers] = useState([]);
+    const [selected, setSelected] = useState({})
 
     useEffect(() => { loadCustomers({ setCustomers }) }, [])
+
+    const [open, setOpen] = useState(false);
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    function clickPayment(customer) {
+        setSelected(customer);
+        setOpen(true);
+    };
+
+    const paymentForm = PaymentForm(selected.id);
 
     return (
         <>
             <UpperBar />
             <Container maxWidth="lg" className={classes.container}>
                 <Typography variant="h3">Clientes</Typography>
-                <CustomersList customers={customers} />
+                <CustomersList customers={customers} onClick={clickPayment}/>
             </Container>
+            <CommonModal render={paymentForm} state={open} handleClose={handleClose} />
         </>
     )
 

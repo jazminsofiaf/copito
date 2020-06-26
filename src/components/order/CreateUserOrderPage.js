@@ -107,13 +107,13 @@ function UserOrderPage(){
     function addItemToCart(props) {
         var added = false;
         cartItems.forEach((item) => {
-            if (item.id == props.item.id) {
+            if (item.id == props.item.id && props.amount) {
                 item.amount = parseInt(item.amount) + parseInt(props.amount);
                 added = true;
             }   
           });
         console.log(JSON.stringify(props, 2, null));
-        if (!added) {
+        if (!added && props.amount) {
             updateCart(cartItems.concat([{"id": props.item.id, "name": props.item.name, "amount": props.amount, "price": props.item.price}]));
         } else {
             updateCart([].concat(cartItems));

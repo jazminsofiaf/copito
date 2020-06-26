@@ -10,12 +10,12 @@ function Orders(props) {
 
     const orderList = props.orders.filter((order) => passesFilter(order))
         .map((filteredOrder) => (
-            <OrderRow key={filteredOrder.id} order={filteredOrder} />
+            <OrderRow key={filteredOrder.id} order={filteredOrder} onClick={props.onClick}/>
         ));
 
     function passesFilter(order) {
 
-        return order && order.client ? !(order.client.toLowerCase().indexOf(filterText.toLowerCase()) === -1) : true;
+        return order && order.owner_summary ? !(order.owner_summary.toLowerCase().indexOf(filterText.toLowerCase()) === -1) : true;
     }
 
     return (

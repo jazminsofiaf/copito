@@ -103,14 +103,15 @@ function SupplierOrderPage(){
     function addItemToCart(props) {
         var added = false;
         cartItems.forEach((item) => {
-            if (item.id == props.item.id) {
+            if (item.id == props.item.id && props.amount) {
                 item.amount = parseInt(item.amount) + parseInt(props.amount);
                 added = true;
             }   
           });   
-        updateCart([].concat(cartItems));
-        if (!added) {
+        if (!added && props.amount) {
             updateCart(cartItems.concat([{"id": props.item.id, "name": props.item.name, "amount": props.amount, "price": 100}]));
+        } else {
+            updateCart([].concat(cartItems));
         }
     }
 

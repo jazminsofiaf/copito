@@ -3,22 +3,11 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import withStyles from "@material-ui/core/styles/withStyles";
-import BuildOrder from './BuildOrder'
-import CommonModal from '../shared/CommonModal'
 
 
 function OrderRow(props) {
     const { classes } = props;
     const order = props.order;
-
-    const [open, setOpen] = useState(false);
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    const buildOrder = BuildOrder({order});
-    
 
     return (
         <Paper className={classes.paper}>
@@ -32,11 +21,14 @@ function OrderRow(props) {
                     <Grid item xs={4}>Items available: {order ? order.items_count : ''}</Grid>
                     <Grid item xs={4}>Items missing: {order ? order.items_count : ''}</Grid>
                     <Grid item xs={4}></Grid>
+                    {order.status != 'DELIVERED' ?
+                    <>
                     <Grid item xs={4}><Button variant='outlined' color='primary'>Eliminar</Button></Grid>
                     <Grid item xs={4}><Button variant='outlined' color='primary'>Editar</Button></Grid>
-                    <Grid item xs={4}><Button variant='outlined' color='primary' onClick={() => setOpen(true)}>Armar</Button></Grid>
+                    </>
+                    : <Grid item xs={8}></Grid> }
+                    <Grid item xs={4}><Button variant='outlined' color='primary' onClick={() => props.onClick(order)}>{order.status == 'COMPLETE' ? "Armar" : order.status == 'ASSEMBLED' ? "Entregar" : "Ver"}</Button></Grid>
             </Grid>
-            <CommonModal render={buildOrder} state={open} handleClose={handleClose} />
         </Paper>
     )
 }

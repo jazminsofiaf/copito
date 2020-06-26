@@ -5,8 +5,11 @@ import Container from "@material-ui/core/Container";
 import UpperBar from "../UpperBar";
 import axios from 'axios';
 import Orders from './Orders';
+import BuildOrder from './BuildOrder'
+import CommonModal from '../shared/CommonModal'
 
 async function loadOrders(props) {
+    // props.setOrders([{},{}]);
     const options = {
         headers: {'Content-Type': 'application/json'}
     };
@@ -27,16 +30,31 @@ async function loadOrders(props) {
 function UserOrdersPage(props) {
     const { classes } = props;
     const [orders, setOrders] = useState([]);
+    const [selectedOrder, setSelectedOrder] = useState()
 
     useEffect(() => { loadOrders({ setOrders }) }, [])
+
+    const [open, setOpen] = useState(false);
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+    
+    function handleBuild(order) {
+        setSelectedOrder(order);
+        setOpen(true);
+    }
+
+    const buildOrder = BuildOrder({selectedOrder});
 
     return (
         <>
             <UpperBar />
             <Container maxWidth="lg" className={classes.container}>
                 <Typography variant="h3">Ordenes clientes</Typography>
-                <Orders orders={orders} />
+                <Orders orders={orders} onClick={handleBuild}/>
             </Container>
+            {selectedOrder ? <CommonModal render={buildOrder} state={open} handleClose={handleClose} /> : null}
         </>
     )
 
