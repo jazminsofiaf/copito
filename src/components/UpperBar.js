@@ -6,14 +6,25 @@ import Typography from "@material-ui/core/Typography";
 import Slide from "@material-ui/core/Slide";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import IconButton from "@material-ui/core/IconButton";
-import {AccountCircle} from "@material-ui/icons";
+import { AccountCircle } from "@material-ui/icons";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Hidden from "@material-ui/core/Hidden";
 import withStyles from "@material-ui/core/styles/withStyles";
-import {withRouter} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import HomeIcon from '@material-ui/icons/Home';
+
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import ShoppingCart from '@material-ui/icons/ShoppingCart';
+import LocalShipping from '@material-ui/icons/LocalShipping';
+import People from '@material-ui/icons/People';
+import ShoppingBasket from '@material-ui/icons/ShoppingBasket';
+import Store from '@material-ui/icons/Store';
+import ShopTwo from '@material-ui/icons/ShopTwo';
+import PersonAdd from '@material-ui/icons/PersonAdd';
+import SaveAltOutlined from '@material-ui/icons/SaveAltOutlined';
 
 var authToken = require('../providers/authToken');
 
@@ -28,13 +39,13 @@ function HideOnScroll(props) {
     );
 }
 
-function Line( ) {
+function Line() {
     return (
         <hr style={{
-                color: 'black',
-                backgroundColor: 'black',
-                height: 2
-            }}
+            color: 'black',
+            backgroundColor: 'black',
+            height: 2
+        }}
         />
     );
 }
@@ -50,17 +61,17 @@ class UpperBar extends React.Component {
     }
 
     handleChange = (event) => {
-        this.setState({auth: event.target.checked});
+        this.setState({ auth: event.target.checked });
     };
 
     handleMenu = (event) => {
-        this.setState({anchorEl: event.currentTarget});
+        this.setState({ anchorEl: event.currentTarget });
 
     };
 
     handleCloseMenu = () => {
         //deja de mostrar el menu
-        this.setState({anchorEl: null});
+        this.setState({ anchorEl: null });
     };
 
     handleMyAccount = () => {
@@ -109,9 +120,48 @@ class UpperBar extends React.Component {
         this.props.history.push('/products');
     }
 
-    goVademecumPage = () => {
-        console.log("go user-order Page");
-        this.props.history.push('/user-order');
+    goToUserOrderPage = () => {
+        console.log("go new-order Page");
+        this.props.history.push('/new-order');
+    }
+
+    goToUserOrdersPage = () => {
+        console.log("go users-orders Page");
+        this.props.history.push('/users-orders');
+    }
+
+    //TODO
+    goToNewClientPage = () => {
+        console.log("go new-customer Page");
+        this.props.history.push('/new-customer');
+    }
+
+    //TODO
+    goToClientsPage = () => {
+        console.log("go customers Page");
+        this.props.history.push('/customers');
+    }
+
+    goToSupplierOrderPage = () => {
+        console.log("go supplier-order Page");
+        this.props.history.push('/supplier-order');
+    }
+
+    //TODO
+    goToSuppliersPage = () => {
+        console.log("go supplier Page");
+        this.props.history.push('/supplier-orders');
+    }
+
+    goToSupplierOrdersPage = () => {
+        console.log("go supplier Page");
+        this.props.history.push('/supplier-orders');
+    }
+
+    //TODO
+    goToReceptionPage = () => {
+        console.log("go supplier Page");
+        this.props.history.push('/supplier-orders');
     }
 
     goContactUsPage = () => {
@@ -127,14 +177,16 @@ class UpperBar extends React.Component {
 
 
     render() {
-        const {classes} = this.props;
+        const { classes } = this.props;
         const open = Boolean(this.state.anchorEl);
-        const isLogged =  !(authToken.getToken() === null);
-        const admin =  isLogged && (authToken.getToken() === 'admin');;
+        const isLogged = !(authToken.getToken() === null);
+        const admin = isLogged && (authToken.getToken() === 'admin');
+        const supplierLinks = { "information": this.goToSuppliersPage, "newOrder": this.goToSupplierOrderPage, "orders": this.goToSupplierOrdersPage, "reception": this.goToReceptionPage };
+        const clientLinks = { "newCustomer": this.goToNewClientPage, "information": this.goToClientsPage, "newOrder": this.goToUserOrderPage, "orders": this.goToUserOrdersPage }
 
         return (
             <div>
-                <CssBaseline/>
+                <CssBaseline />
                 <HideOnScroll {...this.props}>
                     <AppBar position="fixed" className={classes.appBar}>
                         <Toolbar className={classes.toolbar}>
@@ -143,36 +195,36 @@ class UpperBar extends React.Component {
                                     Florida Productos veterinarios
                                 </Typography>
                             </Hidden>
-                            <nav className={classes.menuBar}>
-                                <IconButton
-                                    aria-label="account of current user"
-                                    aria-controls="menu-appbar"
-                                    aria-haspopup="true"
-                                    color="inherit"
-                                    className={classes.menuBarItem}
-                                    onClick={this.goHomePage}>
-                                    <HomeIcon/>
-                                </IconButton>
+                            {/* <nav className={classes.menuBar}> */}
+                            <IconButton
+                                aria-label="account of current user"
+                                aria-controls="menu-appbar"
+                                aria-haspopup="true"
+                                color="inherit"
+                                className={classes.menuBarItem}
+                                onClick={this.goHomePage}>
+                                <HomeIcon />
+                            </IconButton>
 
+                            <Button variant="text" className={classes.menuBarItem}
+                                onClick={this.goProductsPage}>Productos</Button>
+                            <SupplierMenu links={supplierLinks} />
+                            <ClientMenu links={clientLinks} />
+                            <Button variant="text" className={classes.menuBarItem}
+                                onClick={this.goContactUsPage}>Contactenos</Button>
+                            <Hidden only={['sm', 'xs']}>
                                 <Button variant="text" className={classes.menuBarItem}
-                                            onClick={this.goProductsPage}>Productos</Button>
-                                <Button variant="text" className={classes.menuBarItem}
-                                            onClick={this.goVademecumPage}>Orden</Button>
-                                <Button variant="text" className={classes.menuBarItem}
-                                        onClick={this.goContactUsPage}>Contactenos</Button>
-                                <Hidden only={['sm', 'xs']}>
-                                    <Button variant="text" className={classes.menuBarItem}
-                                            onClick={this.goFAQ}>Preguntas frecuentes</Button>
-                                </Hidden>
-                                <IconButton
-                                    aria-label="account of current user"
-                                    aria-controls="menu-appbar"
-                                    aria-haspopup="true"
-                                    onClick={this.handleMenu}
-                                    color="inherit">
-                                    <AccountCircle/>
-                                </IconButton>
-                            </nav>
+                                    onClick={this.goFAQ}>Preguntas frecuentes</Button>
+                            </Hidden>
+                            <IconButton
+                                aria-label="account of current user"
+                                aria-controls="menu-appbar"
+                                aria-haspopup="true"
+                                onClick={this.handleMenu}
+                                color="inherit">
+                                <AccountCircle />
+                            </IconButton>
+                            {/* </nav> */}
                             <div>
                                 <Menu
                                     id="menu-appbar"
@@ -188,13 +240,13 @@ class UpperBar extends React.Component {
                                     }}
                                     open={open}
                                     onClose={this.handleCloseMenu}>
-                                    { isLogged ?
+                                    {isLogged ?
                                         (<div>
-                                                <MenuItem onClick={this.handleMyAccount}>Mi cuenta</MenuItem>
-                                                <MenuItem onClick={this.handleLogOut}>Salir</MenuItem>
+                                            <MenuItem onClick={this.handleMyAccount}>Mi cuenta</MenuItem>
+                                            <MenuItem onClick={this.handleLogOut}>Salir</MenuItem>
                                             {admin &&
                                                 (<div>
-                                                    <Line/>
+                                                    <Line />
                                                     <MenuItem onClick={this.handleProducts}>Editar Productos</MenuItem>
                                                     <MenuItem onClick={this.handleClients}>Clientes</MenuItem>
                                                     <MenuItem onClick={this.handleProviders}>Proveedores</MenuItem>
@@ -202,7 +254,7 @@ class UpperBar extends React.Component {
                                                 </div>)
                                             }
                                         </div>)
-                                        : (  <MenuItem onClick={this.handleLogOut}>Iniciar Sesion</MenuItem>)
+                                        : (<MenuItem onClick={this.handleLogOut}>Iniciar Sesion</MenuItem>)
                                     }
                                 </Menu>
                             </div>
@@ -212,6 +264,162 @@ class UpperBar extends React.Component {
             </div>
         );
     }
+}
+
+const StyledMenu = withStyles({
+    paper: {
+        border: '1px solid #d3d4d5',
+    },
+})((props) => (
+    <Menu
+        elevation={0}
+        getContentAnchorEl={null}
+        anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+        }}
+        transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+        }}
+        {...props}
+    />
+));
+
+const StyledMenuItem = withStyles((theme) => ({
+    root: {
+        '&:focus': {
+            backgroundColor: theme.palette.primary.main,
+            '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+                color: theme.palette.common.white,
+            },
+        },
+    },
+}))(MenuItem);
+
+const StyledButton = withStyles((theme) => ({
+    root: {
+        textTransform: 'none',
+    },
+}))(Button);
+
+function SupplierMenu(props) {
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = (event) => {
+        setAnchorEl(null);
+    };
+
+
+    return (
+        <div>
+            <StyledButton
+                aria-controls="customized-menu"
+                aria-haspopup="true"
+                variant="contained"
+                color="primary"
+                disableElevation
+                onClick={handleClick}
+            >
+                Proveedores
+        </StyledButton>
+            <StyledMenu
+                id="customized-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+            >
+                <StyledMenuItem>
+                    <ListItemIcon>
+                        <Store fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText primary="Informacion" onClick={props.links.suppliers} />
+                </StyledMenuItem>
+                <StyledMenuItem>
+                    <ListItemIcon>
+                        <ShoppingBasket fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText primary="Nueva orden" onClick={props.links.newOrder} />
+                </StyledMenuItem>
+                <StyledMenuItem>
+                    <ListItemIcon>
+                        <LocalShipping fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText primary="Pedidos" onClick={props.links.orders} />
+                </StyledMenuItem>
+                <StyledMenuItem>
+                    <ListItemIcon>
+                        <SaveAltOutlined fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText primary="Recepcion" onClick={props.links.reception} />
+                </StyledMenuItem>
+            </StyledMenu>
+        </div>
+    );
+}
+
+function ClientMenu(props) {
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = (event) => {
+        setAnchorEl(null);
+    };
+
+    return (
+        <div>
+            <StyledButton
+                aria-controls="customized-menu"
+                aria-haspopup="true"
+                variant="contained"
+                color="primary"
+                disableElevation
+                onClick={handleClick}
+            >
+                Clientes
+        </StyledButton>
+            <StyledMenu
+                id="customized-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+            >
+                <StyledMenuItem>
+                    <ListItemIcon>
+                        <PersonAdd fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText primary="Nuevo cliente" onClick={props.links.newCustomer} />
+                </StyledMenuItem>
+                <StyledMenuItem>
+                    <ListItemIcon>
+                        <People fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText primary="Informacion" onClick={props.links.information} />
+                </StyledMenuItem>
+                <StyledMenuItem>
+                    <ListItemIcon>
+                        <ShoppingCart fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText primary="Nuevo pedido" onClick={props.links.newOrder} />
+                </StyledMenuItem>
+                <StyledMenuItem>
+                    <ListItemIcon>
+                        <ShopTwo fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText primary="Pedidos" onClick={props.links.orders} />
+                </StyledMenuItem>
+            </StyledMenu>
+        </div>
+    );
 }
 
 const styles = theme => ({
@@ -253,4 +461,4 @@ const styles = theme => ({
 
 });
 
-export default   withRouter(withStyles(styles)(UpperBar));
+export default withRouter(withStyles(styles)(UpperBar));

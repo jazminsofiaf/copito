@@ -4,6 +4,7 @@ import ProductFilter from '../product/ProductFilter';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import UpperBar from "../UpperBar";
 import axios from 'axios';
@@ -18,8 +19,7 @@ function getUserSelectionBox(props){
         <Autocomplete
                     id="users-box"
                     options={props.profiles}
-                    getOptionLabel={(option) => option.name_summary}
-                    style={{marginTop: "6em"}}
+                    getOptionLabel={(option) => option.name_summary + " - " + option.contact_summary}
                     disabled={props.cartHasItems}
                     onChange={(event, newValue) => {
                         props.setUser(newValue);
@@ -33,10 +33,14 @@ function getUserSelectionBox(props){
 async function uploadOrder(props) {
     const options = {
         headers: {'Content-Type': 'application/json'}
-    };            
+    };
+    props.cartItems.forEach((item) => item.name=undefined);   
+    const orderProducts = props.cartItems;      
     const order = {
+        order: {
         owner_id: props.user.id,
-        products: props.cartItems
+        products: orderProducts
+        }
     }
     alert(JSON.stringify(order, null, 2));
     try {
@@ -48,14 +52,11 @@ async function uploadOrder(props) {
 }
 
 async function getProductsForUser(props) {
-    // return [{"id": 123, "name": "productasdfasdfasdfasasffasdfsasdfasfas1", "amount": 2, "price": 100},
-    // {"id": 1234, "name": "product1", "amount": 2, "price": 100}];
     const options = {
         headers: {'Content-Type': 'application/json'}
     };
     try {
-        // await axios.get(priceListEndpoint+"?userId="+props.userId, options)
-        await axios.get(priceListEndpoint, options)
+        await axios.get(priceListEndpoint+"/"+props.userId, options)
         .then(function (response) {
             props.setProducts(response.data.price_list);
           })
@@ -68,15 +69,13 @@ async function getProductsForUser(props) {
 }
 
 async function loadProfiles(props) {
-    // return [{"id": 123, "name": "productasdfasdfasdfasasffasdfsasdfasfas1", "amount": 2, "price": 100},
-    // {"id": 1234, "name": "product1", "amount": 2, "price": 100}];
     const options = {
         headers: {'Content-Type': 'application/json'}
     };
     try {
-        return await axios.get("/profile/all/summary", options)
+        return await axios.get("/profiles/summary", options)
         .then(function (response) {
-            props.setProfiles(response.data.profiles_summary);
+            props.setProfiles(response.data.customers_summary);
           })
           .catch(function (error) {
             console.log(error);
@@ -87,16 +86,14 @@ async function loadProfiles(props) {
 }
 
 function UserOrderPage(){
-    const [profiles, setProfiles] = useState([]);
+    const [profiles, setProfiles] = useState([{'name_summary': "No hay clientes disponibles"}]);
     useEffect(() => {loadProfiles({setProfiles})},[])
 
-    const [user, setUser] = useState({});
-    const [products, setProducts] = useState([{product_id: 123, name : "prod1" , subDescription: "subdesc1"},
-    {product_id: 888, name : "prod3" , subDescription: "subdesc1"},
-    {product_id: 1234, name : "prod2" , subDescription: "subdesc3"}]);
+    const [user, setUser] = useState();
+    const [products, setProducts] = useState();
     useEffect(() => {
-        const userId = user.id;
-        if (userId) {
+        if (user && user.id) {
+            const userId = user.id;
             getProductsForUser({userId, setProducts});
         }
     }, [user]);
@@ -104,20 +101,22 @@ function UserOrderPage(){
     const [cartItems, updateCart] = useState([]);
 
     function removeItem(itemToRemove) {
-        updateCart(cartItems.filter(item => item.product_id !== itemToRemove.product_id));
+        updateCart(cartItems.filter(item => item.id !== itemToRemove.id));
        };
 
     function addItemToCart(props) {
         var added = false;
         cartItems.forEach((item) => {
-            if (item.product_id == props.item.product_id) {
+            if (item.id == props.item.id && props.amount) {
                 item.amount = parseInt(item.amount) + parseInt(props.amount);
                 added = true;
             }   
-          });   
-        updateCart([].concat(cartItems));
-        if (!added) {
-            updateCart(cartItems.concat([{"product_id": props.item.product_id, "name": props.item.name, "amount": props.amount, "price": 100}]));
+          });
+        console.log(JSON.stringify(props, 2, null));
+        if (!added && props.amount) {
+            updateCart(cartItems.concat([{"id": props.item.id, "name": props.item.name, "amount": props.amount, "price": props.item.price}]));
+        } else {
+            updateCart([].concat(cartItems));
         }
     }
 
@@ -130,12 +129,11 @@ function UserOrderPage(){
 
     return(
         <>
-        <div>
-            <UpperBar/>
-        </div>
-        <Container maxWidth="lg">
+        <UpperBar/>
+        <Container maxWidth="lg" style={{marginTop: "6em"}}>
+            <Typography variant="h3">Pedido de cliente</Typography>
             <Grid container spacing={1}> 
-                <Grid item container style={{backgroundColor:"#748386", borderRadius: '0px 0px 20px 20px', padding: '10px'}}>
+                <Grid item container style={{backgroundColor:"#FDF0D5", borderRadius: '20px 20px 20px 20px', padding: '10px'}}>
                     <Grid item xs={12} sm={2}></Grid>
                     <Grid item xs={12} sm={8}>
                         <Paper>
@@ -144,10 +142,10 @@ function UserOrderPage(){
                     </Grid>
                 </Grid>
                 <Grid item xs={12} sm={8}>
-                    <ProductFilter products={products} onClick={addItemToCart}/>
+                    {user ? <ProductFilter products={products} onClick={addItemToCart}/> : null}
                 </Grid>
                 <Grid item xs={12} sm={4}>
-                    <CartDrawer elements={cartItems} onClick={{createOrder, removeItem}}/>
+                    {user ? <CartDrawer elements={cartItems} onClick={{createOrder, removeItem}}/> : null}
                 </Grid>
             </Grid>
         </Container>

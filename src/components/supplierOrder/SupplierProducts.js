@@ -1,20 +1,20 @@
-import React from 'react';
-import ProductRowDetails from './ProductRowDetails'
+import React from 'react'
+import SupplierProductRow from './SupplierProductRow';
 
-function filterProducts(props) {
+function filterItems(props) {
     const rows = [];
     const maxRows = 15;
 
     var count = 0;
-    if (props.products && props.products.length > 0) {
-      props.products.forEach((product) => {
+    if (props.items && props.items.length > 0) {
+      props.items.forEach((product) => {
           if (product.name.toLowerCase().indexOf(props.filterText.toLowerCase()) === -1) {
             return;
           }
           if (count < maxRows) {
             rows.push(
-              <ProductRowDetails
-                product={product}
+              <SupplierProductRow
+                item={product}
                 key={product.id}
                 onClick={props.onClick}
               />
@@ -26,14 +26,14 @@ function filterProducts(props) {
       return rows;
 }
 
-function ProductList(props) {
-    const productList = filterProducts(props);
+function SupplierProducts(props) {
+    const itemList = filterItems(props);
 
     return (
         <>
-            {productList}
+            {itemList}
         </>
     )
 }
 
-export default ProductList;
+export default SupplierProducts;
