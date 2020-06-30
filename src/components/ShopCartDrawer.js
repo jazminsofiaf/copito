@@ -32,7 +32,6 @@ export default function ShopCartDrawer(props) {
     const [open, setOpen] = React.useState(isDesktop);
 
     const handleDrawerOpen = () => {
-        console.log(isDesktop)
         setOpen(true);
     };
 

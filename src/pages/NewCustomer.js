@@ -114,7 +114,6 @@ class NewCustomer extends React.Component {
         const { classes } = this.props;
 
         async function onSubmit(values) {
-            alert(JSON.stringify(values, null, 2));
             const options = {
                 headers: { 'Content-Type': 'application/json' }
             };

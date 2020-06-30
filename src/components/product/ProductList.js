@@ -8,7 +8,8 @@ function filterProducts(props) {
     var count = 0;
     if (props.products && props.products.length > 0) {
       props.products.forEach((product) => {
-          if (product.name.toLowerCase().indexOf(props.filterText.toLowerCase()) === -1) {
+          var searchBy = product.name +" "+ product.brand;
+          if (searchBy.toLowerCase().indexOf(props.filterText.toLowerCase()) === -1) {
             return;
           }
           if (count < maxRows) {

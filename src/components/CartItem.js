@@ -10,11 +10,6 @@ class CartItem extends React.Component {
         super(props);
     }
 
-    handleDelete(){
-        console.log("add to card");
-    }
-
-
     render() {
         const {
             classes,

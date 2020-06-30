@@ -20,7 +20,6 @@ function PaymentForm(ownerId) {
     initialValues.owner_id = ownerId;
 
     async function onSubmit(values) {
-        alert(JSON.stringify(values, null, 2));
         const options = {
             headers: { 'Content-Type': 'application/json' }
         };

@@ -42,8 +42,7 @@ const validationSchema = Yup.object().shape({
             .required(),
         expiration_date: Yup.date('Falta fecha')
             .required('Fecha requerida'),
-        price: Yup.number()
-            .required('Falta precio'),
+        price: Yup.string().matches(/^\d*\.{1}\d*$/).required("Falta precio"),
         amount: Yup.string()
             .matches(/^[0-9]*$/, 'Invalid amount')
             .max(8)
@@ -87,7 +86,6 @@ function ReceptionModal(modalOrder) {
         };
         values.received_products.forEach((item) => { item.original_price = undefined; item.expiration_date = format(item.expiration_date, "dd/MM/yyyy");});
         const reception = { reception: values };
-        console.log(JSON.stringify(reception, 2, null))
         try {
             await axios.post(receptionFormEndpoint, reception, options);
             modalOrder.status = 'RECEIVED'

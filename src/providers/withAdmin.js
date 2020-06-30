@@ -13,7 +13,6 @@ export default function withAdmin(ComponentToProtect) {
             };
         }
         componentDidMount() {
-            console.log(authToken.getToken());
             if(authToken.getToken() === 'admin')
                 this.setState({ loading: false });
             else

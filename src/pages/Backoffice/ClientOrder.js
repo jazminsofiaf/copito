@@ -32,7 +32,6 @@ class ClientOrder extends React.Component{
             }
         }).then(response => response.json())
             .then(data => {
-                console.log(data.clients);
                 this.setState({
                     clients : data.clients,
                 });
@@ -52,7 +51,6 @@ class ClientOrder extends React.Component{
         this.setState({
             selectedClient: client,
         })
-        console.log(this.state.selectedClient)
 
     }
 

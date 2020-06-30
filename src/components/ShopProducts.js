@@ -28,7 +28,6 @@ class ShopProducts extends React.Component{
             }
         }).then(response => response.json())
             .then(data => {
-                console.log(data.products);
                 this.setState({
                     products : data.products,
                 });

@@ -2,7 +2,13 @@ import React from 'react'
 import './ProductRowDetails.css';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import bovinos from './Bovinos.gif';
+import bovinos from './resources/Bovinos.gif';
+import caninos from './resources/Caninos.gif';
+import felinos from './resources/Felinos.gif';
+import caprinos from './resources/Caprinos.gif';
+import equinos from './resources/Equinos.gif';
+import ovinos from './resources/Ovinos.gif';
+import porcinos from './resources/Porcinos.gif';
 import AmountField from '../shared/AmountField'
 
 
@@ -29,9 +35,11 @@ function productPrice(price) {
 function getSpecies(species) {
 
     const row = species ? species : [] ;
-    const images = row.map((specie) => (
-        <img key={specie} src={bovinos} alt="bovinos"/>
-    ))
+    const images = row.map((specie) => {
+        var imgSrc = specie == 'caninos'? caninos : specie == 'felinos' ? felinos : specie == 'bovinos' ? bovinos : specie == 'equinos' ? equinos : specie == 'ovinos' ? ovinos : specie == 'porcinos' ? porcinos : caprinos; 
+        return <img key={imgSrc} src={imgSrc} alt={specie} title={specie}/>
+    }
+    )
     return (
         <div>
             {images}

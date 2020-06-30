@@ -42,7 +42,6 @@ async function uploadOrder(props) {
         products: orderProducts
         }
     }
-    alert(JSON.stringify(order, null, 2));
     try {
         await axios.post(orderEnpoint,order, options);
         alert("Orden creada con exito.");
@@ -112,8 +111,7 @@ function UserOrderPage(){
                 added = true;
             }   
           });
-        console.log(JSON.stringify(props, 2, null));
-        if (!added && props.amount) {
+        if (!added && props.amount && props.item.price) {
             updateCart(cartItems.concat([{"id": props.item.id, "name": props.item.name, "amount": props.amount, "price": props.item.price}]));
         } else {
             updateCart([].concat(cartItems));

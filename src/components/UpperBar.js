@@ -26,6 +26,7 @@ import ShopTwo from '@material-ui/icons/ShopTwo';
 import PersonAdd from '@material-ui/icons/PersonAdd';
 import SaveAltOutlined from '@material-ui/icons/SaveAltOutlined';
 
+
 var authToken = require('../providers/authToken');
 
 function HideOnScroll(props) {
@@ -50,7 +51,6 @@ function Line() {
     );
 }
 
-
 class UpperBar extends React.Component {
     constructor(props) {
         super(props);
@@ -59,6 +59,7 @@ class UpperBar extends React.Component {
             anchorEl: null,
         }
     }
+    
 
     handleChange = (event) => {
         this.setState({ auth: event.target.checked });
@@ -75,12 +76,10 @@ class UpperBar extends React.Component {
     };
 
     handleMyAccount = () => {
-        console.log("mi cuenta");
         this.handleCloseMenu();
     }
 
     handleLogOut = () => {
-        console.log("salir");
         authToken.removeToken();
 
         this.handleCloseMenu();
@@ -88,93 +87,75 @@ class UpperBar extends React.Component {
     }
 
     handleClients = () => {
-        console.log("clientes");
         this.handleCloseMenu();
         this.props.history.push('/backoffice/clients');
     }
 
     handleProviders = () => {
-        console.log("proveedores");
         this.handleCloseMenu();
         this.props.history.push('/backoffice/providers');
     }
 
     handleProducts = () => {
-        console.log("editar productos");
         this.handleCloseMenu();
         this.props.history.push('/backoffice/products');
     }
     handleClientOrder = () => {
-        console.log("generar orden de cliente");
         this.handleCloseMenu();
         this.props.history.push('/backoffice/client-order');
     }
 
     goHomePage = () => {
-        console.log("go products Page");
         this.props.history.push('/home');
     }
 
     goProductsPage = () => {
-        console.log("go products Page");
         this.props.history.push('/products');
     }
 
     goToUserOrderPage = () => {
-        console.log("go new-order Page");
         this.props.history.push('/new-order');
     }
 
     goToUserOrdersPage = () => {
-        console.log("go users-orders Page");
         this.props.history.push('/users-orders');
     }
 
     //TODO
     goToNewClientPage = () => {
-        console.log("go new-customer Page");
         this.props.history.push('/new-customer');
     }
 
     //TODO
     goToClientsPage = () => {
-        console.log("go customers Page");
         this.props.history.push('/customers');
     }
 
     goToSupplierOrderPage = () => {
-        console.log("go supplier-order Page");
         this.props.history.push('/supplier-order');
     }
 
     //TODO
     goToSuppliersPage = () => {
-        console.log("go supplier Page");
         this.props.history.push('/supplier-orders');
     }
 
     goToSupplierOrdersPage = () => {
-        console.log("go supplier Page");
         this.props.history.push('/supplier-orders');
     }
 
     //TODO
     goToReceptionPage = () => {
-        console.log("go supplier Page");
         this.props.history.push('/supplier-orders');
     }
 
     goContactUsPage = () => {
-        console.log("go contact Page");
         this.props.history.push('/contact-us');
     }
 
     goFAQ = () => {
-        console.log("go faq Page");
         this.props.history.push('/faq');
     }
-
-
 
     render() {
         const { classes } = this.props;
@@ -206,16 +187,16 @@ class UpperBar extends React.Component {
                                 <HomeIcon />
                             </IconButton>
 
-                            <Button variant="text" className={classes.menuBarItem}
-                                onClick={this.goProductsPage}>Productos</Button>
+                            {/* <Button variant="text" className={classes.menuBarItem}
+                                onClick={this.goProductsPage}>Productos</Button> */}
                             <SupplierMenu links={supplierLinks} />
                             <ClientMenu links={clientLinks} />
-                            <Button variant="text" className={classes.menuBarItem}
+                            {/* <Button variant="text" className={classes.menuBarItem}
                                 onClick={this.goContactUsPage}>Contactenos</Button>
                             <Hidden only={['sm', 'xs']}>
                                 <Button variant="text" className={classes.menuBarItem}
                                     onClick={this.goFAQ}>Preguntas frecuentes</Button>
-                            </Hidden>
+                            </Hidden> */}
                             <IconButton
                                 aria-label="account of current user"
                                 aria-controls="menu-appbar"

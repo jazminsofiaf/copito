@@ -72,7 +72,6 @@ async function uploadOrder(props) {
         products: props.cartItems
         }
     }
-    alert(JSON.stringify(order, null, 2));
     try {
         await axios.post('/suppliers/new-order',order, options);
         alert("Orden creada con exito.");
@@ -108,8 +107,8 @@ function SupplierOrderPage(){
                 added = true;
             }   
           });   
-        if (!added && props.amount) {
-            updateCart(cartItems.concat([{"id": props.item.id, "name": props.item.name, "amount": props.amount, "price": 100}]));
+        if (!added && props.amount && props.item.price) {
+            updateCart(cartItems.concat([{"id": props.item.id, "name": props.item.name, "amount": props.amount, "price": props.item.price}]));
         } else {
             updateCart([].concat(cartItems));
         }

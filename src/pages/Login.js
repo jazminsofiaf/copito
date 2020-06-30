@@ -33,85 +33,47 @@ function Copyright() {
     );
 }
 
-const SignUpUser = ({ history }) => {
-    const handleLogIn = useCallback(async event => {
-        event.preventDefault();
-        const { email, password } = event.target.elements;
-        try {
-            await
-            Fire
-                    .auth()
-                    .createUserWithEmailAndPassword(email.value, password.value);
-            history.push("/");
-        } catch (error) {
-            alert(error);
-        }
-    }, [history]);
-}
+function Login(props) {
 
-class SignIn extends React.Component {
+    const { currentUser, setToken } = useContext(AuthContext)
 
-    handleInputChange = (event) => {
-        const { value, name } = event.target;
-        this.setState({
-            [name]: value
-        });
+
+    const handleLogIn = useCallback(
+        async event => {
+            event.preventDefault();
+            const { email, password } = event.target.elements;
+            try {
+                await
+                    Fire
+                        .auth()
+                        .signInWithEmailAndPassword(email.value, password.value)
+                        .then(async res => {
+                            const token = await Object.entries(res.user)[5][1].b
+                            //set token to localStorage 
+                            localStorage.setItem('token', token)
+                            setToken(window.localStorage.token)
+                            console.log(res)
+                            props.history.push("/");
+                        })
+            } catch (error) {
+                alert(error);
+            }
+        },
+        [props.history]
+    );
+
+    const handleSignUp = (event) => {
+        props.history.push('/sign-up');
     }
 
-    handleSignUp = (event) => {
-        this.props.history.push('/sign-up');
-    }
-
-    handleForgotPassword = (event) => {
+    const handleForgotPassword = (event) => {
         console.log("forgot password")
     }
 
-    onSubmit = (event) => {
-        event.preventDefault();//prevent a browser reload/refresh
-        if (this.state.email === 'jazminsofiaf@gmail.com' && this.state.password === 'admin') {
-            alert('Atencion! Acceso de Admin sin autenticar!!!');
-            authToken.setToken("admin");
-            this.props.history.push('/home');
-        } else {
-            alert('Suponemos que hichimos un post y nos devolvio un jwt!!!');
-            authToken.setToken("otro");
-            this.props.history.push('/home');
-        }
-        // {
-        // let user = {
-        //     "email": this.state.email,
-        //     "password": this.state.password,
-        // };
-        // fetch(server_url + '/user/authenticate', {
-        //     method: 'post',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(user),
-        // }).then(res => res.json())
-        //     .then(res => {
-        //         console.log(res);
-        //         if (res.result === 'OK') {
-        //             console.log(res.token);
-        //             //authToken.setToken(res.token);
-        //             this.props.history.push('/');
-        //         } else {
-        //             const error = new Error(res.error);
-        //             throw error;
-        //         }
-        //     })
-        //     .catch(err => {
-        //         console.error(err);
-        //     });
+    const { classes } = props;
 
-        // }
-    }
-
-
-    render() {
-        const { classes } = this.props;
-
-        return (
+    return (
+        currentUser ? <Redirect to="/home" /> :
             <Grid container component="main" className={classes.root}>
                 <CssBaseline />
                 <Grid item xs={false} sm={4} md={7} className={classes.image} >
@@ -119,12 +81,12 @@ class SignIn extends React.Component {
                         <Box display="flex" justifyContent="center" m={1} p={1} >
                             <Typography variant="h4" noWrap className={classes.mainTitle}>
                                 FLORIDA
-                            </Typography>
+                        </Typography>
                             <PetsIcon className={classes.icon} />
                         </Box>
                         <Typography variant="h4" className={classes.mainTitle}>
                             Productos Veterinarios
-                        </Typography>
+                    </Typography>
                     </div>
                 </Grid>
                 <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -134,8 +96,8 @@ class SignIn extends React.Component {
                         </Avatar>
                         <Typography component="h1" variant="h5">
                             Ingresar
-                        </Typography>
-                        <form className={classes.form} noValidate onSubmit={this.onSubmit}>
+                    </Typography>
+                        <form className={classes.form} noValidate onSubmit={handleLogIn}>
                             <TextField
                                 variant="outlined"
                                 margin="normal"
@@ -145,7 +107,7 @@ class SignIn extends React.Component {
                                 label="Email"
                                 name="email"
                                 autoComplete="email"
-                                onChange={this.handleInputChange}
+                                // onChange={(e) => setEmail(e.target.value)}
                                 autoFocus
                             />
                             <TextField
@@ -157,7 +119,9 @@ class SignIn extends React.Component {
                                 label="Contraseña"
                                 type="password"
                                 id="password"
-                                onChange={this.handleInputChange}
+                                // onChange={(e) => {
+                                //     console.log(e.target.value);
+                                //     setPassword(e.target.value);}}
                                 autoComplete="current-password"
                             />
                             <FormControlLabel
@@ -172,15 +136,15 @@ class SignIn extends React.Component {
                                 className={classes.submit}
                             >
                                 Iniciar sesion
-                            </Button>
+                        </Button>
                             <Grid container spacing={1}>
                                 <Grid item xs>
-                                    <Link variant="body2" onClick={this.handleForgotPassword}>
+                                    <Link variant="body2" onClick={handleForgotPassword}>
                                         Olvide mi contraseña
-                                    </Link>
+                                </Link>
                                 </Grid>
                                 <Grid item xs>
-                                    <Link variant="body2" onClick={this.handleSignUp}>
+                                    <Link variant="body2" onClick={handleSignUp}>
                                         {"¿No tenes cuenta? Solicitala aca!"}
                                     </Link>
                                 </Grid>
@@ -192,8 +156,7 @@ class SignIn extends React.Component {
                     </div>
                 </Grid>
             </Grid>
-        );
-    }
+    );
 }
 
 const styles = theme => ({
@@ -243,5 +206,4 @@ const styles = theme => ({
     },
 });
 
-
-export default withStyles(styles)(SignIn);
+export default withRouter(withStyles(styles)(Login));

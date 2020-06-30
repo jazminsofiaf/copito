@@ -15,7 +15,6 @@ async function loadCustomers(props) {
     try {
         return await axios.get("/profiles/summary", options)
         .then(function (response) {
-            console.log(response.data.customers_summary)
             props.setCustomers(response.data.customers_summary);
           })
           .catch(function (error) {

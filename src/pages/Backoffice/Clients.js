@@ -35,7 +35,6 @@ class Clients extends React.Component{
             }
         }).then(response => response.json())
             .then(data => {
-                console.log(data.clients);
                 this.setState({
                     clients : data.clients,
                 });
@@ -50,7 +49,6 @@ class Clients extends React.Component{
     }
 
     handleTextChange= name => event => {
-        console.log(event.target.value);
         this.setState({ search : event.target.value });
     };
 

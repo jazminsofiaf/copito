@@ -75,7 +75,7 @@ function ReceptionRow(props) {
                             <TextField
                                 {...field}
                                 variant="standard"
-                                type="number"
+                                type="decimal"
                                 required
                                 InputProps={{ inputProps: { min: 0 } }}
                                 value={item.price}

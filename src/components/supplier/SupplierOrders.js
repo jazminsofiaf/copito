@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import SupplierOrderRow from "./SupplierOrderRow"
 import Container from "@material-ui/core/Container"
 import Paper from "@material-ui/core/Paper"
@@ -13,12 +13,15 @@ import ReceptionModal from "./ReceptionModal"
 import SearchRow from "../shared/SearchRow"
 import { isValid } from 'date-fns';
 import axios from 'axios';
+import { AuthContext } from "../../providers/Auth";
 
 async function loadSupplierOrders(props) {
     // props.setOrders([{ "id": 1, "name": "Zoovet", "items": [{"id":123, "amount": 3, "name": "prod10", "price": 123}, {"id":1000, "amount": 2, "name": "Super megar nombre de producto", "price": 1000}], "total_cost": 12345, "order_numer": "number", "status": "pending", "emission_date": "17/05/2020" },
     // { "id": 2, "name": "Barandu", "items": [{"id":123, "amount": 1, "name": "prod10", "price": 10}, {"id":1000, "amount": 2, "name": "Super megar nombre de producto", "price": 6}], "total_cost": 12345, "order_numer": "number", "status": "pending", "emission_date": "17/05/2020" }]);
     const options = {
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' ,
+        // 'Authorization': 'Token '+props.token
+    }
     };
     try {
         return await axios.get("/suppliers/orders/complete", options)
@@ -69,8 +72,9 @@ function OrderModal(props) {
 
 function SupplierOrders() {
     const [orders, setOrders] = useState([]);
+    const { token } = useContext(AuthContext)
 
-    useEffect(() => { loadSupplierOrders({ setOrders }) }, [])
+    useEffect(() => { loadSupplierOrders({ setOrders , token}) }, [])
 
     const [modalOrder, setModalOrder] = useState({});
     //Order modal

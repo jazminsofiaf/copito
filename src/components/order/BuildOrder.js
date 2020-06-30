@@ -8,7 +8,6 @@ import CancelIcon from '@material-ui/icons/Cancel';
 
 async function deliverOrder(props) {
     const orderId = props.order.id;
-    alert(props.order.id)
     props.order.status = "DELIVERED";
     const options = {
         headers: { 'Content-Type': 'application/json' }
@@ -24,7 +23,6 @@ async function deliverOrder(props) {
 
 async function getAssembleSpecifications(props) {
     const orderId = props.order.id;
-    console.log(orderId);
     const options = {
         headers: { 'Content-Type': 'application/json' }
     };
@@ -32,7 +30,6 @@ async function getAssembleSpecifications(props) {
         const assembleSepecificationsEndpoint = "/orders/" + orderId + "/assemble-specifications"
         await axios.get(assembleSepecificationsEndpoint, options)
             .then(function (response) {
-                console.log(response.data);
                 props.setAssembleSpecifications(response.data);
             })
             .catch(function (error) {
@@ -45,9 +42,7 @@ async function getAssembleSpecifications(props) {
 
 async function readyToDeliver(props) {
     const orderId = props.order.id;
-    alert(props.order.id)
     props.order.status = "ASSEMBLED";
-    console.log(props.order);
     const options = {
         headers: { 'Content-Type': 'application/json' }
     };
@@ -78,9 +73,7 @@ function BuildOrder(props) {
     console.log(order);
 
     useEffect(() => {
-        console.log('USE EFFECT');
         if (order) {
-            console.log('ORDER');
             getAssembleSpecifications({ setAssembleSpecifications, order });
         }
     }, [order])
