@@ -45,7 +45,7 @@ function UserOrdersPage(props) {
         setOpen(true);
     }
 
-    const buildOrder = BuildOrder({selectedOrder});
+    const buildOrder = BuildOrder({selectedOrder, handleClose});
 
     return (
         <>

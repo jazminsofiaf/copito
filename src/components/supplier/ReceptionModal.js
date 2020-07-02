@@ -79,7 +79,6 @@ function ReceptionModal(props) {
         }
     }
 
-    
     var formattedDate = format(new Date(), "dd/MM/yy HH:mm");
 
     return (
