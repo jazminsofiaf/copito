@@ -49,8 +49,9 @@ async function readyToDeliver(props) {
     try {
         const assembledEndpoint = "/orders/" + orderId + "/assembled"
         await axios.put(assembledEndpoint, options);
+        alert("Orden armada con exito.");
     } catch (error) {
-        alert("Error, algo fallo al entregar la orden.");
+        alert("Error, algo fallo al armar la orden.");
     }
 }
 
@@ -58,10 +59,21 @@ function OrderItem(props) {
     const item = props.item;
     return (
         <Grid item container xs={12}>
-            <Grid item xs={2}>{item.status == 'AVAILABLE' ? <CheckCircleIcon style={{ color: 'green' }}/> : <CancelIcon style={{ color: 'red' }}/>}</Grid>
+            <Grid item xs={2}>{item.status == 'AVAILABLE' ? <CheckCircleIcon style={{ color: 'green' }} /> : <CancelIcon style={{ color: 'red' }} />}</Grid>
             <Grid item xs={5}>{item.name}</Grid>
             <Grid item xs={2}>{item.amount}</Grid>
             <Grid item xs={3}>{item.expiration_view}</Grid>
+        </Grid>
+    )
+}
+
+function assembledItem(props) {
+    const item = props.item;
+    return (
+        <Grid item container xs={12}>
+            <Grid item xs={2}><CheckCircleIcon style={{ color: 'green' }} /></Grid>
+            <Grid item xs={5}>{item.name}</Grid>
+            <Grid item xs={2}>{item.amount}</Grid>
         </Grid>
     )
 }
@@ -87,15 +99,14 @@ function BuildOrder(props) {
     )) : [];
 
     const readyToAssemble = assembleSpecifications && assembleSpecifications.products ? assembleSpecifications.products.map((item) => (
-       item.status == 'AVAILABLE')).reduce((acc, next) => acc && next) : [];
-
+        item.status == 'AVAILABLE')).reduce((acc, next) => acc && next) : [];
 
     return (
         // <Paper style={{ padding: '10px' }}>
         <>
-            <Typography variant='h4'>{order.status == 'DELIVERED' ? "Entregado" : "Armar orden"}</Typography>
+            <Typography variant='h4'>{order.status == 'DELIVERED' ? "Entregado" : order.status == 'ASSEMBLED' ? "Entrega" : "Armar orden"}</Typography>
             <Grid container spacing={2}>
-                <Grid item container xs={12} style={{fontWeight:'bold'}}>
+                <Grid item container xs={12} style={{ fontWeight: 'bold' }}>
                     <Grid item xs={2}>Estado</Grid>
                     <Grid item xs={5}>Producto</Grid>
                     <Grid item xs={2}>Cant.</Grid>
@@ -103,10 +114,10 @@ function BuildOrder(props) {
                 </Grid>
                 {itemList}
                 {order.status == 'ASSEMBLED' ?
-                    <Grid item xs={12}><Button variant='outlined' color='primary' onClick={() => deliverOrder({ order, history })}>Entregar</Button></Grid> :
+                    <Grid item xs={12}><Button variant='outlined' color='primary' onClick={() => deliverOrder({ order, history})}>Entregar</Button></Grid> :
                     order.status == 'COMPLETE' ?
-                    <Grid item xs={12}><Button variant='outlined' color='primary' disabled={!readyToAssemble} onClick={() => readyToDeliver({ order, history })}>Listo, armado!</Button></Grid> :
-                    null
+                        <Grid item xs={12}><Button variant='outlined' color='primary' disabled={!readyToAssemble} onClick={() => readyToDeliver({ order, history})}>Listo, armado!</Button></Grid> :
+                        null
                 }
             </Grid>
         </>

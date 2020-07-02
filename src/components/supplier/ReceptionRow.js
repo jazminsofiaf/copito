@@ -88,7 +88,7 @@ function ReceptionRow(props) {
                     </Field>
                 </Grid>
                 <Grid item xs={1}>
-                    <Typography style={{ paddingTop: '10px' }}>{item.price * item.amount}</Typography>
+                    <Typography style={{ paddingTop: '0.2em' }}>{item.price * item.amount}</Typography>
                 </Grid>
             </Grid>
         </Paper>

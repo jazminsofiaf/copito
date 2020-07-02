@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
@@ -14,7 +14,6 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { format } from "date-fns"
 
-const receptionFormEndpoint = '/supplier/order/reception'
 
 const item = {
     id: '',
@@ -60,8 +59,8 @@ function validateReception(receptionRequest) {
     return valid;
 }
 
-function ReceptionModal(modalOrder) {
-
+function ReceptionModal(props) {
+    const modalOrder = props.modalOrder;
     const items = modalOrder.products;
 
     if (items) {
@@ -74,27 +73,13 @@ function ReceptionModal(modalOrder) {
     function onSubmit(values) {
         var validReception = validateReception(values);
         if (validReception) {
-            sendRequest(values);
+            props.sendRequest(values);
         } else {
             alert("Invalid reception");
         }
     }
 
-    async function sendRequest(values) {
-        const options = {
-            headers: { 'Content-Type': 'application/json' }
-        };
-        values.received_products.forEach((item) => { item.original_price = undefined; item.expiration_date = format(item.expiration_date, "dd/MM/yyyy");});
-        const reception = { reception: values };
-        try {
-            await axios.post(receptionFormEndpoint, reception, options);
-            modalOrder.status = 'RECEIVED'
-            alert("Felicidades, recepcion exitosa!");
-        } catch (error) {
-            alert("Error, recepcion invalida.");
-        }
-    }
-
+    
     var formattedDate = format(new Date(), "dd/MM/yy HH:mm");
 
     return (
@@ -166,16 +151,16 @@ function ReceptionModal(modalOrder) {
                             <Grid item xs={12}>
                                 <Reception values={values} />
                             </Grid>
-                            <Grid container style={{textAlign:'left'}}>
+                            <Grid container style={{textAlign:'right', padding:'0.5em'}}>
                                 <Grid item xs={8}></Grid>
                                 <Grid item xs={2}><Typography>Total:</Typography></Grid>
                                 <Grid item xs={2}><Typography>$ {receptionTotal(values)}</Typography></Grid>
                                 <Grid item xs={8}></Grid>
                                 <Grid item xs={2}><Typography>IVA:</Typography></Grid>
-                                <Grid item xs={2}><Typography>$ {receptionTotal(values) * 0.21}</Typography></Grid>
+                                <Grid item xs={2}><Typography>$ {(receptionTotal(values) * 0.21).toFixed(2)}</Typography></Grid>
                                 <Grid item xs={8}></Grid>
                                 <Grid item xs={2}><Typography>Total+IVA:</Typography></Grid>
-                                <Grid item xs={2}><Typography>$ {receptionTotal(values) * 1.21}</Typography></Grid>
+                                <Grid item xs={2}><Typography>$ {(receptionTotal(values) * 1.21).toFixed(2)}</Typography></Grid>
                             </Grid>
                             <Grid item xs={8}></Grid>
                             <Grid item xs={4}>

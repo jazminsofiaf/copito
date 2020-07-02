@@ -14,14 +14,19 @@ import SearchRow from "../shared/SearchRow"
 import { isValid } from 'date-fns';
 import axios from 'axios';
 import { AuthContext } from "../../providers/Auth";
+import Loader from '../shared/Loader'
+import { format } from "date-fns"
+
+
 
 async function loadSupplierOrders(props) {
     // props.setOrders([{ "id": 1, "name": "Zoovet", "items": [{"id":123, "amount": 3, "name": "prod10", "price": 123}, {"id":1000, "amount": 2, "name": "Super megar nombre de producto", "price": 1000}], "total_cost": 12345, "order_numer": "number", "status": "pending", "emission_date": "17/05/2020" },
     // { "id": 2, "name": "Barandu", "items": [{"id":123, "amount": 1, "name": "prod10", "price": 10}, {"id":1000, "amount": 2, "name": "Super megar nombre de producto", "price": 6}], "total_cost": 12345, "order_numer": "number", "status": "pending", "emission_date": "17/05/2020" }]);
     const options = {
-        headers: { 'Content-Type': 'application/json' ,
-        // 'Authorization': 'Token '+props.token
-    }
+        headers: {
+            'Content-Type': 'application/json',
+            // 'Authorization': 'Token '+props.token
+        }
     };
     try {
         return await axios.get("/suppliers/orders/complete", options)
@@ -56,25 +61,32 @@ function OrderModal(props) {
                 <Grid item xs={12}>
                     <CartElementContainer elements={modalOrder.products} />
                 </Grid>
-                <Grid item xs={4}>
-                    <Button variant="contained" color="primary">Editar</Button>
-                </Grid>
-                <Grid item xs={4}>
-                    <Button variant="contained" color="primary">Eliminar</Button>
-                </Grid>
-                <Grid item xs={4}>
-                    <Button variant="contained" color="primary" onClick={() => props.openReception()}>Ingresar</Button>
-                </Grid>
+                {modalOrder.status != 'RECEIVED' ?
+                    <>
+                        <Grid item xs={4}>
+                            <Button variant="contained" color="primary">Editar</Button>
+                        </Grid>
+                        <Grid item xs={4}>
+                            <Button variant="contained" color="primary">Eliminar</Button>
+                        </Grid>
+                        <Grid item xs={4}>
+                            <Button variant="contained" color="primary" onClick={() => props.openReception()}>Ingresar</Button>
+                        </Grid>
+                    </>
+                    : null
+                }
             </Grid>
         </Paper>
     )
 }
 
 function SupplierOrders() {
-    const [orders, setOrders] = useState([]);
-    const { token } = useContext(AuthContext)
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
 
-    useEffect(() => { loadSupplierOrders({ setOrders , token}) }, [])
+    const [orders, setOrders] = useState([]);
+
+    useEffect(() => { loadSupplierOrders({ setOrders }) }, [])
 
     const [modalOrder, setModalOrder] = useState({});
     //Order modal
@@ -110,7 +122,43 @@ function SupplierOrders() {
         setOpenReceptionModal(true);
     }
 
-    const receptionModal = ReceptionModal(modalOrder);
+    const timer = React.useRef();
+    useEffect(() => {
+        return () => {
+            clearTimeout(timer.current);
+        };
+    }, []);
+
+    function cleanPage() {
+        setFilterText('');
+        setOpen(false);
+        setOpenReceptionModal(false);
+        setModalOrder({})
+    }
+
+
+    async function sendRequest(values) {
+        setLoading(true);
+        const options = {
+            headers: { 'Content-Type': 'application/json' }
+        };
+        values.received_products.forEach((item) => { item.original_price = undefined; item.expiration_date = format(item.expiration_date, "dd/MM/yyyy");});
+        const reception = { reception: values };
+        try {
+            await axios.post('/supplier/order/reception', reception, options);
+            setSuccess(true);
+            modalOrder.status = 'RECEIVED'
+            timer.current = setTimeout(() => {
+                cleanPage()
+                setLoading(false);
+                setSuccess(false);
+            }, 1500);
+        } catch (error) {
+            alert("Error, recepcion invalida.");
+        }
+    }
+
+    const receptionModal = ReceptionModal({ modalOrder, sendRequest });
 
     return (
         <>
@@ -122,6 +170,7 @@ function SupplierOrders() {
                 <CommonModal render={orderModal} state={open} handleClose={handleClose} />
                 <CommonModal render={receptionModal} state={openReceptionModal} handleClose={handleCloseReception} />
             </Container>
+            <Loader isLoading={loading} isSuccess={success}/>
         </>
     )
 }
